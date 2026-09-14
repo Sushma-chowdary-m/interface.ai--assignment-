@@ -103,8 +103,8 @@ class ReplayError(Exception):
 # (see mock_bank/app.py and templates/error.html), not guessed generically.
 # This matters: a plausible-looking pattern that doesn't match the real
 # strings is silently dead code — exactly what shipped here originally
-# (e.g. "member not found" never matches "No member found with ID: 12345"
-# or "Member 12345 not found."). Verified against every error string the
+# (e.g. "member not found" never matches "No member found with ID: 482915"
+# or "Member 482915 not found."). Verified against every error string the
 # mock app actually renders; extend this list per-target when reusing the
 # engine against a different app (see REPORT.md "Heterogeneity").
 BUSINESS_OUTCOME_PATTERNS: list[tuple[str, str]] = [
@@ -259,7 +259,18 @@ async def _locate(page: Page, step: ArtifactStep, timeout_ms: int):
     candidates = [step.locator.primary] + (step.locator.fallbacks or [])
 
     def _get_loc(sel: str):
-        if sel.startswith("text="):
+        if sel.startswith("role=button:"):
+            # Scoped to actual <button>/<input type=submit> elements, not
+            # any element containing the text. Needed because a plain
+            # text= match is ambiguous whenever a nav link's label happens
+            # to contain the button's label as a substring — e.g. a
+            # "Search" submit button vs. a "Search Member" nav link, where
+            # `text=Search` (case-insensitive substring) matches both, and
+            # `.first` silently grabs whichever renders first in the DOM.
+            # Found by replaying an artifact and watching it click the nav
+            # link instead of submitting the form — not a hypothetical.
+            return page.get_by_role("button", name=sel[len("role=button:"):], exact=False).first
+        elif sel.startswith("text="):
             return page.get_by_text(sel[5:], exact=False).first
         elif sel.startswith("placeholder="):
             return page.get_by_placeholder(sel[12:]).first
@@ -305,7 +316,7 @@ async def _execute_step(
 
         This was previously implemented as a string-replace looking for a
         literal "{{name}}" placeholder *inside* `.value` — but `.value`
-        holds the actual discovery-time value ("12345"), never the
+        holds the actual discovery-time value ("482915"), never the
         placeholder text, so that replace was always a silent no-op.
         Parameterized replay was therefore completely non-functional: every
         replay repeated the exact value recorded during discovery
@@ -319,26 +330,31 @@ async def _execute_step(
             return params[inp.name]
         return inp.value
 
-    def resolve_str(v: str | None) -> str | None:
-        """Fallback for plain (non-InputParameter) strings, e.g. a page URL
-        that might itself carry a `{{name}}` placeholder in a future
-        artifact version."""
-        if not v:
-            return v
-        for k, val in params.items():
-            v = v.replace(f"{{{{{k}}}}}", val)
-        return v
-
     # -------------------------------------------------------------------
     if kind == "navigate":
-        url = resolve_input(step.inputs[0]) if step.inputs else resolve_str(step.page_url)
-        if not url or url == "None":
-            url = step.page_url
-        try:
-            await page.goto(url, wait_until="domcontentloaded", timeout=step.timeout_ms)
-        except PWTimeout:
-            raise RecoverableError(f"Navigation timeout to {url}")
-        await asyncio.sleep(0.5)
+        # Deliberately does NOT fall back to step.page_url when there's no
+        # recorded input value. page_url is documented elsewhere (see
+        # ArtifactStep) as discovery-run provenance ONLY — "what page was
+        # this step recorded on" — never a replay instruction. Reusing it
+        # as a navigation target used to be exactly what happened here,
+        # and it silently teleported replay back to the discovery-time
+        # record on any navigate step whose actual value wasn't captured
+        # (e.g. a scroll action) — destroying parameterization for every
+        # step after it. If there's truly no target, the only safe action
+        # is to stay on the current page, not guess one.
+        target = resolve_input(step.inputs[0]) if step.inputs else None
+        if target:
+            try:
+                if target.startswith("javascript:"):
+                    await page.evaluate(target[len("javascript:"):])
+                else:
+                    await page.goto(target, wait_until="domcontentloaded", timeout=step.timeout_ms)
+            except PWTimeout:
+                raise RecoverableError(f"Navigation timeout to {target}")
+            await asyncio.sleep(0.5)
+        # else: no target was recorded — stay on the current page rather
+        # than guess one; falls through to the shared outcome/extraction
+        # checks below like any other step.
 
     # -------------------------------------------------------------------
     elif kind == "click":
@@ -449,7 +465,7 @@ class ReplayEngine:
     Replays a saved Artifact deterministically.
 
     async with ReplayEngine() as engine:
-        result = await engine.run(artifact, params={"member_id": "12345"})
+        result = await engine.run(artifact, params={"member_id": "482915"})
     """
 
     def __init__(

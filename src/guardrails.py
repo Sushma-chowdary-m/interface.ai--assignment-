@@ -98,8 +98,18 @@ BLOCKED_SELECTOR_PATTERNS: list[str] = [
 # ---------------------------------------------------------------------------
 
 _PII_PATTERNS: list[tuple[str, str]] = [
-    # password literal (only officer/bank123 in our mock but pattern is generic)
-    (r"\bbank\d{3,}\b", "[REDACTED_PASSWORD]"),
+    # Labeled password occurrences in free-text log lines (e.g. a raw
+    # exception message or human handoff note that happens to include
+    # "password: <value>"). Deliberately NOT a hardcoded literal tied to
+    # one specific demo credential — a redaction rule that only matches
+    # today's password stops working the moment that password rotates,
+    # which defeats the point. The structural defense for the common case
+    # (a credential captured as a named input/output field, e.g.
+    # {"name": "password", "value": "..."}) lives in sanitize_artifact()
+    # below and doesn't depend on knowing the value in advance at all —
+    # this pattern is the secondary net for the same secret leaking into
+    # unstructured text instead.
+    (r"(?i)\b(password|passwd|pwd)\b\s*[:=]\s*\S+", "[REDACTED_PASSWORD]"),
     # US SSN
     (r"\b\d{3}-\d{2}-\d{4}\b", "[REDACTED_SSN]"),
     # US credit card (basic Luhn-structure check omitted — pattern match only)
@@ -313,6 +323,6 @@ if __name__ == "__main__":
         print(f"[{'OK' if ok else 'BLOCK'}] {kind:10s} {(sel or val or '')[:40]:40s} risk={risk.value:8s} {reason}")
 
     print("\nPII redaction test:")
-    sample = "Password: bank123 | SSN: 123-45-6789 | Member ID: 12345"
+    sample = "Password: REDACTED_PASSWORD | SSN: 123-45-6789 | Member ID: 482915"
     print(f"  Before: {sample}")
     print(f"  After:  {g.redact(sample)}")

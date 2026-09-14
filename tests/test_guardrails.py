@@ -47,11 +47,19 @@ def test_navigate_is_safe_by_default():
 
 
 def test_redact_scrubs_ssn_and_password():
-    text = "Password: bank123 | SSN: 123-45-6789 | Member ID: 12345"
+    text = "Password: REDACTED_PASSWORD | SSN: 123-45-6789 | Member ID: 482915"
     redacted = GuardrailsEngine.redact(text)
-    assert "bank123" not in redacted
+    assert "REDACTED_PASSWORD" not in redacted
     assert "123-45-6789" not in redacted
-    assert "12345" in redacted   # not PII — must survive redaction
+    assert "482915" in redacted   # not PII — must survive redaction
+
+
+def test_redact_password_pattern_is_not_tied_to_one_literal_credential():
+    # The redaction rule matches the label ("password:"), not a hardcoded
+    # value — so it still catches a password after that value rotates,
+    # unlike a rule hardcoded to today's specific demo credential.
+    redacted = GuardrailsEngine.redact("password=Sw0rdfish!99 during handoff")
+    assert "Sw0rdfish!99" not in redacted
 
 
 def test_redact_scrubs_email():
@@ -63,13 +71,13 @@ def test_redact_scrubs_email():
 def test_sanitize_artifact_removes_blocked_fields_recursively():
     data = {
         "step": 1,
-        "inputs": [{"name": "password", "value": "hunter2"}],
-        "nested": {"ssn": "111-22-3333", "member_id": "12345"},
+        "inputs": [{"name": "password", "value": "Sw0rdfish!99"}],
+        "nested": {"ssn": "111-22-3333", "member_id": "482915"},
     }
     cleaned = GuardrailsEngine.sanitize_artifact(data)
     assert cleaned["inputs"][0]["value"] == "[REDACTED]"
     assert cleaned["nested"]["ssn"] == "[REDACTED]"
-    assert cleaned["nested"]["member_id"] == "12345"
+    assert cleaned["nested"]["member_id"] == "482915"
 
 
 def test_sanitize_artifact_redacts_pii_inside_free_text_strings():

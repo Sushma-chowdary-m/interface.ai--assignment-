@@ -1,0 +1,15 @@
+{"ts": 1789358038628, "run_id": "replay_open_account_1789357884", "level": "INFO", "message": "Logger initialised", "data": {"log_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/replay_open_account_1789357884/agent.log"}}
+{"ts": 1789358038628, "run_id": "replay_open_account_1789357884", "level": "INFO", "message": "Replay logger started", "data": {"replay_run_id": "replay_open_account_1789357884"}}
+{"ts": 1789358039614, "run_id": "replay_open_account_1789357884", "level": "INFO", "message": "ReplayEngine browser launched", "data": {"run_id": "replay_open_account_1789357884"}}
+{"ts": 1789358039614, "run_id": "replay_open_account_1789357884", "level": "INFO", "message": "Replay started", "data": {"artifact_id": "open_account_1789358038", "task_id": "open_account", "params": {"member_id": "482915", "account_type": "savings"}}}
+{"ts": 1789358041898, "run_id": "replay_open_account_1789357884", "level": "DEBUG", "message": "Authenticated", "data": {"url": "http://127.0.0.1:5001/dashboard"}}
+{"ts": 1789358041899, "run_id": "replay_open_account_1789357884", "level": "DEBUG", "message": "Starting replay", "data": {"url": "http://127.0.0.1:5001/dashboard"}}
+{"ts": 1789358041899, "run_id": "replay_open_account_1789357884", "level": "INFO", "message": "Skipping login step 1", "data": {}}
+{"ts": 1789358041899, "run_id": "replay_open_account_1789357884", "level": "INFO", "message": "Skipping login step 2", "data": {}}
+{"ts": 1789358041899, "run_id": "replay_open_account_1789357884", "level": "INFO", "message": "Skipping login step 3", "data": {}}
+{"ts": 1789358041899, "run_id": "replay_open_account_1789357884", "level": "INFO", "message": "Skipping login step 4", "data": {}}
+{"ts": 1789358041899, "run_id": "replay_open_account_1789357884", "level": "INFO", "message": "Skipping login step 5", "data": {}}
+{"ts": 1789358052395, "run_id": "replay_open_account_1789357884", "level": "WARNING", "message": "Recoverable error step 9 attempt 1: Step 9: element not found with any locator strategy. Tried: ['button.search-btn']. Current URL: http://127.0.0.1:5001/search", "data": {"attempt": 1}}
+{"ts": 1789358058907, "run_id": "replay_open_account_1789357884", "level": "WARNING", "message": "Recoverable error step 9 attempt 2: Step 9: element not found with any locator strategy. Tried: ['button.search-btn']. Current URL: http://127.0.0.1:5001/search", "data": {"attempt": 2}}
+{"ts": 1789358066921, "run_id": "replay_open_account_1789357884", "level": "WARNING", "message": "Recoverable error step 9 attempt 3: Step 9: element not found with any locator strategy. Tried: ['button.search-btn']. Current URL: http://127.0.0.1:5001/search", "data": {"attempt": 3}}
+{"ts": 1789358067073, "run_id": "replay_open_account_1789357884", "level": "ERROR", "message": "Hard failure at step 9: Step 9: element not found with any locator strategy. Tried: ['button.search-btn']. Current URL: http://127.0.0.1:5001/search", "data": {"screenshot": "/Users/sushmamallampati/interface-ai-assignment/evidence/replay_open_account_1789357884/1789358066923_hard_fail_step9.png"}}

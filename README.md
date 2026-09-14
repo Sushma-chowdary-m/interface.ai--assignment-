@@ -69,18 +69,18 @@ python src/run_tasks.py --visible
 **Replay an existing artifact directly** (this is the path a production AI agent would trigger
 — no LLM call, just deterministic execution against saved parameters):
 ```bash
-python src/replay.py artifacts/read_balance_v1_0.json member_id=12345
-python src/replay.py artifacts/read_balance_v1_0.json member_id=00000   # business outcome: not found
+python src/replay.py artifacts/read_balance_v1_0.json member_id=482915
+python src/replay.py artifacts/read_balance_v1_0.json member_id=000000  # business outcome: not found
 ```
 
 **Run the discovery agent standalone** on an arbitrary goal:
 ```bash
-python src/agent.py "Look up member 67890 and read their current savings balance"
+python src/agent.py "Look up member 738204 and read their current savings balance"
 ```
 
 **Escalation / human handoff demo** (real handoff, not mocked logic — see REPORT.md §5):
 ```bash
-python src/agent.py --escalate-demo "Look up member 12345 and read their current savings balance"
+python src/agent.py --escalate-demo "Look up member 482915 and read their current savings balance"
 ```
 This pauses the real agent run at step 2, opens an oversight page at
 `http://127.0.0.1:7777`, and waits for you to click **Resume Automation**. The browser tab
@@ -95,7 +95,7 @@ curl http://127.0.0.1:8000/capabilities
 curl http://127.0.0.1:8000/capabilities/read_balance
 curl -X POST http://127.0.0.1:8000/capabilities/read_balance/run \
   -H "Content-Type: application/json" \
-  -d '{"parameters": {"member_id": "12345"}}'
+  -d '{"parameters": {"member_id": "482915"}}'
 curl http://127.0.0.1:8000/runs/<run_id>          # poll status/result
 ```
 

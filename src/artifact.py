@@ -20,6 +20,7 @@ replay.py reads it and re-executes deterministically WITHOUT calling Claude.
 from __future__ import annotations
 
 import json
+import re
 import time
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
@@ -191,7 +192,7 @@ def build_artifact(
             clean_selector = _clean_selector(a.selector)
             locator = LocatorStrategy(
                 primary   = clean_selector,
-                fallbacks = _infer_fallbacks(clean_selector),
+                fallbacks = _infer_fallbacks(clean_selector, a.description),
             )
 
         # --- Inputs ---
@@ -202,6 +203,27 @@ def build_artifact(
                 value        = a.value,
                 is_templated = _is_templatable(a.selector or ""),
                 template_key = _template_key(a.selector or ""),
+            ))
+        elif a.kind.value == "navigate" and a.value:
+            # A navigate action's actual target (a URL, or a `javascript:`
+            # scroll snippet the agent used for scrolling) was previously
+            # discarded entirely during artifact building — only `type`
+            # actions got an InputParameter. That meant replay's navigate
+            # branch always fell through to reusing `step.page_url` (a
+            # purely informational field documented elsewhere as "never
+            # used by replay") as if it were the actual target — which is
+            # usually a harmless no-op, but is a real bug the moment the
+            # recorded page_url is for a *different* record than the one
+            # the current (differently-parameterized) replay is actually
+            # on: it silently teleports the browser back to the discovery-
+            # time URL, discarding all parameterized progress. Found by
+            # replaying this exact artifact with a different member_id and
+            # watching the output revert to the original member's data.
+            inputs.append(InputParameter(
+                name         = "url",
+                value        = a.value,
+                is_templated = False,
+                template_key = None,
             ))
 
         # --- Output extraction (only on done steps or steps with extracted_data) ---
@@ -325,8 +347,32 @@ def _clean_selector(selector: str) -> str:
     return selector
 
 
-def _infer_fallbacks(primary: str) -> list[str]:
-    """Generate fallback selectors from a primary selector."""
+_BUTTON_TEXT_RE = re.compile(r"\bthe\s+([A-Za-z0-9 &'/-]+?)\s+button\b", re.IGNORECASE)
+
+
+def _infer_fallbacks(primary: str, description: str = "") -> list[str]:
+    """
+    Generate fallback selectors from a primary selector (and, for click
+    steps, the action's description).
+
+    A CSS class Claude guesses for a button (e.g. "button.search-btn") is
+    frequently just wrong — it doesn't correspond to any real class in the
+    target markup — and unlike the text=/placeholder=/select cases below,
+    there is no generic prefix to pattern-match on to know a fallback is
+    needed. That gap caused a real hard failure on replay: a discovery run
+    recorded `button.search-btn` (real markup is `button[type='submit']`
+    with class `btn-primary`) with zero fallbacks, so replay had no
+    recovery path when the guessed class didn't exist. Caught by actually
+    replaying the artifact, not by reading the code.
+
+    The fix: Claude's action descriptions consistently follow "Click the
+    <LABEL> button" phrasing (a property of how it's prompted, not
+    specific to this one step) — extracting that visible label and adding
+    it as a `text=` fallback works regardless of what CSS class the real
+    button actually has, plus a generic `button[type='submit']` catch-all
+    since every actionable button in this app (and most simple forms) is
+    exactly one per visible form/section.
+    """
     if primary.startswith("text="):
         return [
             "a[href='/search']",
@@ -344,7 +390,18 @@ def _infer_fallbacks(primary: str) -> list[str]:
             "#account_type",
         ]
     else:
-        return []
+        fallbacks: list[str] = []
+        m = _BUTTON_TEXT_RE.search(description or "")
+        if m:
+            # role=button: (not text=) — a plain text match is ambiguous
+            # whenever some other element's label contains the button's
+            # label as a substring (e.g. a "Search" button vs. a "Search
+            # Member" nav link); scoping to the button ARIA role rules
+            # those false matches out. See replay.py's _get_loc.
+            fallbacks.append(f"role=button:{m.group(1).strip()}")
+        if "button" in primary.lower() or "btn" in primary.lower():
+            fallbacks.append("button[type='submit']")
+        return fallbacks
 
 
 def _infer_input_name(selector: str) -> str:

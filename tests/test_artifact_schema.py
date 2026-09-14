@@ -24,9 +24,9 @@ def _sample_artifact() -> Artifact:
     step = ArtifactStep(
         step_number=1, action_kind="type", description="type member id",
         locator=LocatorStrategy(primary="placeholder=Member ID", fallbacks=["input[name='member_id']"]),
-        inputs=[InputParameter(name="member_id", value="12345", is_templated=True, template_key="{{member_id}}")],
+        inputs=[InputParameter(name="member_id", value="482915", is_templated=True, template_key="{{member_id}}")],
         outputs=[OutputExtraction(field_name="savings_balance", source="text", selector=".balance-amount")],
-        checkpoints=[SuccessCheckpoint(kind="url_contains", value="/member/12345")],
+        checkpoints=[SuccessCheckpoint(kind="url_contains", value="/member/482915")],
         risk_level="safe", is_reversible=True,
     )
     return Artifact(
@@ -56,7 +56,7 @@ def test_password_input_is_redacted_on_save(tmp_path: Path):
     step = ArtifactStep(
         step_number=1, action_kind="type", description="type password",
         locator=LocatorStrategy(primary="input[name='password']"),
-        inputs=[InputParameter(name="password", value="bank123")],
+        inputs=[InputParameter(name="password", value="REDACTED_PASSWORD")],
         outputs=[], checkpoints=[], risk_level="caution", is_reversible=True,
     )
     art = Artifact(

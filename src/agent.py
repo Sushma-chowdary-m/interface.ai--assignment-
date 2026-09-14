@@ -356,7 +356,7 @@ class BankingAgent:
 
     Usage:
         async with BankingAgent() as agent:
-            result = await agent.run("Look up member 12345 balance")
+            result = await agent.run("Look up member 482915 balance")
     """
 
     def __init__(
@@ -442,12 +442,12 @@ class BankingAgent:
                 raw = raw.strip()
 
             # Claude sometimes prefaces the JSON with a sentence of prose
-            # despite instructions to return JSON only — extract the object.
+            # despite instructions to return JSON only — skip to the first
+            # object boundary before parsing.
             if raw and not raw.startswith("{"):
                 start = raw.find("{")
-                end = raw.rfind("}")
-                if start != -1 and end != -1 and end > start:
-                    raw = raw[start:end + 1]
+                if start != -1:
+                    raw = raw[start:]
 
             if not raw:
                 last_exc = ValueError(
@@ -460,7 +460,19 @@ class BankingAgent:
                 continue
 
             try:
-                return json.loads(raw)
+                # Deliberately NOT json.loads(raw): that requires the ENTIRE
+                # string to be exactly one JSON value, so it throws
+                # "Extra data" the moment Claude appends anything after a
+                # perfectly valid object — trailing commentary, a stray
+                # newline plus more text, etc. This happened repeatedly in
+                # practice (caught via real discovery runs, not a
+                # hypothetical). raw_decode() parses one JSON value starting
+                # at position 0 and simply ignores whatever comes after it,
+                # which is exactly the tolerance needed here: we only ever
+                # want the first action object, never a multi-document
+                # response.
+                obj, _ = json.JSONDecoder().raw_decode(raw)
+                return obj
             except json.JSONDecodeError as exc:
                 last_exc = exc
                 self.logger.warning(
@@ -811,7 +823,7 @@ if __name__ == "__main__":
         args = [a for a in args if a != "--escalate-demo"]
         escalate_demo_step = 2
 
-    goal = " ".join(args) or "Look up member 12345 and read their current savings balance"
+    goal = " ".join(args) or "Look up member 482915 and read their current savings balance"
     print(f"Running agent with goal: {goal!r}")
     result = asyncio.run(_run_cli(goal, escalate_demo_step))
 

@@ -62,10 +62,10 @@ class FakePage:
 
 async def test_member_not_found_is_detected_as_business_outcome():
     page = FakePage(
-        url="http://127.0.0.1:5001/member/00000",
+        url="http://127.0.0.1:5001/member/000000",
         title="Error",
-        body_text="Member 00000 not found.",
-        locators={".alert-error": FakeLocator(text="Member 00000 not found.")},
+        body_text="Member 000000 not found.",
+        locators={".alert-error": FakeLocator(text="Member 000000 not found.")},
     )
     outcome = await _detect_business_outcome(page)
     assert outcome == "member_not_found"
@@ -76,7 +76,7 @@ async def test_permission_denied_is_detected():
     # patterns are ordered most-specific-first) — both labels are valid
     # for this message; access_denied is the one that actually fires.
     page = FakePage(
-        url="http://127.0.0.1:5001/member/99999",
+        url="http://127.0.0.1:5001/member/990017",
         title="Error",
         body_text="Permission denied. This account is restricted.",
         locators={".alert-error": FakeLocator(text="Permission denied. This account is restricted.")},
@@ -88,7 +88,7 @@ async def test_permission_denied_is_detected():
 async def test_restricted_without_denial_wording_is_still_detected():
     text = "This account is currently restricted pending review."
     page = FakePage(
-        url="http://127.0.0.1:5001/member/99999",
+        url="http://127.0.0.1:5001/member/990017",
         title="Error",
         body_text=text,
         locators={".alert-error": FakeLocator(text=text)},
@@ -112,7 +112,7 @@ async def test_session_expired_is_detected_separately_from_business_outcomes():
 
 async def test_normal_page_has_no_business_outcome():
     page = FakePage(
-        url="http://127.0.0.1:5001/member/12345",
+        url="http://127.0.0.1:5001/member/482915",
         title="Member Profile",
         body_text="Savings balance: $4,250.00",
     )
@@ -137,10 +137,10 @@ async def test_static_reference_text_elsewhere_on_page_is_not_a_false_positive()
         body_text=(
             "Search Member\n"
             "Test Member IDs\n"
-            "12345 — Active Member\n"
-            "67890 — Active Member\n"
-            "99999 — Restricted User — Permission Denied\n"
-            "00000 — Not Found\n"
+            "482915 — Active Member\n"
+            "738204 — Active Member\n"
+            "990017 — Restricted User — Permission Denied\n"
+            "000000 — Not Found\n"
         ),
         # No .alert-error container present — this is the successful-search case.
     )
@@ -151,10 +151,10 @@ async def test_static_reference_text_elsewhere_on_page_is_not_a_false_positive()
 async def test_scoped_error_container_is_used_when_present():
     error_box = FakeLocator(text="Permission denied. This account is restricted.")
     page = FakePage(
-        url="http://127.0.0.1:5001/member/99999",
+        url="http://127.0.0.1:5001/member/990017",
         title="System Error",
         body_text=(
-            "Test Member IDs\n99999 — Restricted User — Permission Denied\n"
+            "Test Member IDs\n990017 — Restricted User — Permission Denied\n"
             "Permission denied. This account is restricted."
         ),
         locators={".alert-error": error_box},
@@ -176,14 +176,14 @@ def _step_with_checkpoints(checkpoints):
 
 
 async def test_url_contains_checkpoint_passes_when_present():
-    page = FakePage(url="http://127.0.0.1:5001/member/12345", title="x", body_text="")
-    step = _step_with_checkpoints([SuccessCheckpoint(kind="url_contains", value="/member/12345")])
+    page = FakePage(url="http://127.0.0.1:5001/member/482915", title="x", body_text="")
+    step = _step_with_checkpoints([SuccessCheckpoint(kind="url_contains", value="/member/482915")])
     assert await _verify_checkpoints(page, step) is True
 
 
 async def test_url_contains_checkpoint_fails_when_absent():
     page = FakePage(url="http://127.0.0.1:5001/dashboard", title="x", body_text="")
-    step = _step_with_checkpoints([SuccessCheckpoint(kind="url_contains", value="/member/12345")])
+    step = _step_with_checkpoints([SuccessCheckpoint(kind="url_contains", value="/member/482915")])
     assert await _verify_checkpoints(page, step) is False
 
 
@@ -194,9 +194,9 @@ async def test_title_contains_checkpoint_is_case_insensitive():
 
 
 async def test_all_checkpoints_must_pass():
-    page = FakePage(url="http://127.0.0.1:5001/member/12345", title="Wrong Title", body_text="")
+    page = FakePage(url="http://127.0.0.1:5001/member/482915", title="Wrong Title", body_text="")
     step = _step_with_checkpoints([
-        SuccessCheckpoint(kind="url_contains", value="/member/12345"),
+        SuccessCheckpoint(kind="url_contains", value="/member/482915"),
         SuccessCheckpoint(kind="title_contains", value="Member Profile"),
     ])
     assert await _verify_checkpoints(page, step) is False
@@ -222,14 +222,14 @@ async def test_extract_text_with_regex_pattern():
 async def test_extract_attribute():
     page = FakePage(
         url="http://x", title="x", body_text="",
-        locators={"#acct-num": FakeLocator(attrs={"data-account": "SAV-12345-NEW"})},
+        locators={"#acct-num": FakeLocator(attrs={"data-account": "SAV-482915-NEW"})},
     )
     rule = OutputExtraction(
         field_name="account_number", source="attribute",
         selector="#acct-num", attribute="data-account",
     )
     value = await _extract_output(page, rule)
-    assert value == "SAV-12345-NEW"
+    assert value == "SAV-482915-NEW"
 
 
 async def test_extract_missing_element_returns_none_not_exception():

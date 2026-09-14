@@ -58,7 +58,7 @@ that's literally what an AI agent needs to invoke it safely:
     selector. A legacy app's markup can shift between a class name and an href pattern without
     the *flow* changing; ranked fallbacks absorb that without a re-recording.
   - `InputParameter` with `is_templated` / `template_key` — the discovery run's literal value
-    (`"12345"`) is preserved for audit, but replay substitutes `{{member_id}}` from caller-
+    (`"482915"`) is preserved for audit, but replay substitutes `{{member_id}}` from caller-
     supplied params. This is what makes an artifact **parameterized** rather than a fixed replay
     of one specific run.
   - `OutputExtraction` (source: text/attribute/url/title/regex) — declares *what the capability
@@ -117,16 +117,17 @@ crashing or misreporting an expired session as if it were a valid business answe
 of the runtime conditions the brief calls out by name ("session/timeout expiry") and it's
 handled with an actual recovery action, not just detection.
 
-**Two more bugs caught by actually running the system, not by reading the code** (both now
-fixed, both covered by regression tests):
+**Four bugs caught by actually running the system, not by reading the code** (all now fixed,
+covered by regression tests where the bug is pure logic — the last two only fully surfaced
+once the first was fixed and a genuinely different parameter value could be tested end-to-end):
 
 1. *Parameterized replay was completely non-functional.* The original `resolve()` did a
    string-replace looking for a literal `"{{member_id}}"` placeholder *inside* the recorded
-   input value — but the recorded value is the discovery-time literal (`"12345"`), never the
+   input value — but the recorded value is the discovery-time literal (`"482915"`), never the
    placeholder text, so the replace was always a silent no-op. Every replay repeated whatever
    value was typed during discovery regardless of what params the caller passed — the single
    most important promise of "record once, invoke with different arguments" was broken. Found
-   by replaying with `member_id=67890` and getting member 12345's balance back. Fixed by
+   by replaying with `member_id=738204` and getting member 482915's balance back. Fixed by
    resolving through `InputParameter.is_templated`/`.name` against the caller's `params` dict
    directly, not through string substitution on the wrong field
    (`tests/...` — see `_execute_step`'s `resolve_input`).
@@ -140,10 +141,38 @@ fixed, both covered by regression tests):
    present on every real error state in `login.html`/`search.html`/`error.html`) with no
    full-page fallback — a fallback would have silently reintroduced the same false positive.
 
-Both are now regression-tested against the real page copy (`tests/test_replay_logic.py`), not
-just against sanitized fixtures — the whole point of both bugs is that a plausible-looking
-implementation can be wrong in a way unit tests only catch if they use the target app's actual
-strings and a real replay run surfaces if they don't.
+3. *A `navigate` step with no recorded target silently reused `page_url` — discovery-run
+   provenance metadata, documented elsewhere as "informational, never consulted by replay" —
+   as if it were an actual navigation instruction.* This happened specifically for a `navigate`
+   action whose real value (a `javascript:` scroll snippet, not a URL) was previously discarded
+   entirely — `build_artifact` only ever captured a value for `type` actions. With no input
+   recorded, replay fell back to `step.page_url`, which is fine as a no-op *until* a
+   differently-parameterized replay is genuinely on a different page than the one recorded
+   during discovery — at which point it silently teleports the browser back to the original
+   discovery-time record, discarding all parameterized progress made so far. This is exactly why
+   bug #1 masked it: with parameterization broken, every replay stayed on the recorded member
+   anyway, so the stale `page_url` always "coincidentally" matched. It only became visible once
+   parameterization was fixed and a second member ID could be tested through the *entire* flow.
+   Fixed two places: `build_artifact` now captures a `navigate` action's real value (URL or
+   `javascript:` snippet) as an input like any other action; `_execute_step`'s navigate branch no
+   longer falls back to `page_url` at all — with no target, it now correctly does nothing rather
+   than guess one.
+4. *A button locator's fallback was ambiguous.* `artifact.py` infers a `text=<label>` fallback
+   from a click step's description (e.g. "Click the SEARCH button" → `text=SEARCH`) when the
+   recorded CSS selector doesn't pan out. But this app's navbar has a "Search Member" link, and
+   Playwright's `text=` match is a case-insensitive substring — so `text=SEARCH` matched *both*
+   the real submit button and the unrelated nav link, and `.first` silently clicked whichever
+   rendered first in the DOM (the nav link), which just reloads the search page without
+   submitting anything. Fixed by scoping the fallback to Playwright's `button` ARIA role
+   (`get_by_role("button", name=...)`) instead of plain text — an anchor-styled nav link has role
+   `link`, not `button`, so it's correctly excluded regardless of what text it contains.
+
+All four are now regression-tested (`tests/test_replay_logic.py`, `tests/test_artifact_schema.py`)
+against the real page copy and real artifact shapes, not sanitized fixtures — the whole point of
+bugs #1 and #2 is that a plausible-looking implementation can be wrong in a way unit tests only
+catch if they use the target app's actual strings, and bugs #3/#4 only surfaced by replaying the
+same artifact twice with two different, genuinely valid parameter sets and diffing the outputs —
+a single happy-path replay looked completely fine in both cases.
 
 **Checkpoints as a safety net, not a hard gate.** A checkpoint mismatch is currently logged as a
 warning and replay continues rather than raising `ReplayError` — chosen because a checkpoint
@@ -281,7 +310,7 @@ the old bare-substring patterns either). Verified in `tests/test_guardrails.py`.
 top-level `"password"` key) — it never caught the case where the blocked name lives in a
 sibling `"name"` field and the actual secret sits under the literal key `"value"`, which is
 exactly the shape a discovery run produces when the agent types into a password field
-(`InputParameter(name="password", value="bank123")`). I found this with a unit test
+(`InputParameter(name="password", value="REDACTED_PASSWORD")`). I found this with a unit test
 (`test_sanitize_artifact_removes_blocked_fields_recursively`) that failed against the original
 implementation, then fixed `sanitize_artifact` to also recognize and redact that name/value
 pair shape. This is now covered by a regression test in `tests/test_artifact_schema.py`
@@ -302,11 +331,11 @@ What's built thin-but-real, and why:
 
 - **Login is engine-level, not an artifact step.** `replay.py` authenticates before executing
   any artifact steps, reading `BANK_USERNAME`/`BANK_PASSWORD` from env. This was originally
-  hardcoded literally in source (`"officer"`/`"bank123"` in both the system prompt and the
+  hardcoded literally in source (`"j.martinez"`/`"REDACTED_PASSWORD"` in both the system prompt and the
   replay engine) — fixed to env-sourced credentials, but the deeper limitation remains: auth
   isn't yet a first-class, composable artifact concept. **Next:** a reusable `authenticate` step
   type where the artifact declares a credential *reference* (e.g. `"credential_ref":
-  "bank_portal_officer"`), resolved from a secrets manager at replay time — this is what makes
+  "bank_portal_j_martinez"`), resolved from a secrets manager at replay time — this is what makes
   auth reusable across tenants running the same vendor product with different credentials,
   rather than baked into the engine for one app.
 - **Locator inference is tuned to one app.** `artifact.py`'s `_clean_selector`/
@@ -326,6 +355,28 @@ What's built thin-but-real, and why:
 - **`api.py`'s run registry is in-memory** — fine for a demo, not for a restart-surviving
   production deployment. Would move to a real datastore before this became a second dependency
   any other service relied on.
+- **A declared parameter isn't always backed by a step that consumes it.** The `open_account`
+  artifact's `TaskMeta.parameters` lists `account_type` as a caller-supplied input, but the
+  discovery run never actually interacted with that form field — "Savings" was already the
+  default selected option, so the agent left it alone and no `select` step was ever recorded.
+  Passing a different `account_type` at replay time is therefore silently a no-op: nothing raises
+  an error, but nothing changes either. Found while re-verifying parameterization, not fixed —
+  fixing it properly means re-recording discovery with a goal that forces the agent to actually
+  choose a non-default account type, not a code change. **Next:** validate at artifact-build time
+  that every declared parameter has at least one consuming step, and reject (or flag) the
+  artifact if not — turning this class of gap into a build-time error instead of a silent runtime
+  no-op.
+
+**A reliability fix worth naming even though it's not a "bug" in the error-taxonomy sense:**
+Claude's JSON action response occasionally includes trailing content after a complete, valid
+object — closer to "the model kept talking" than malformed JSON. The original parser
+(`json.loads(raw)`) requires the *entire* string to be exactly one JSON value, so it threw
+`json.JSONDecodeError: Extra data` and burned a retry every time this happened — observed
+directly across real discovery runs, more often on the longer 20-step `open_account` flow than
+the short one, consistent with more conversation turns giving more chances for it to occur.
+Switched to `json.JSONDecoder().raw_decode(raw)`, which parses one JSON value starting at
+position 0 and ignores whatever follows — the correct tolerance here, since exactly one action
+object is all this loop ever wants regardless of what else the model appended.
 
 If I had another day, in priority order: (1) the `authenticate` step type, since it's the
 biggest unlock for the multi-tenant story being real instead of aspirational; (2) multi-run

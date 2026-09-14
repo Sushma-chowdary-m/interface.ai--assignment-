@@ -7,26 +7,26 @@ app.secret_key = "fake-bank-secret-key-2024"
 
 # ── Fake member database ──────────────────────────────────────────────────────
 MEMBERS = {
-    "12345": {
-        "id": "12345",
+    "482915": {
+        "id": "482915",
         "name": "John Smith",
         "email": "john.smith@email.com",
         "savings_balance": "$4,250.00",
         "checking_balance": "$1,820.50",
         "status": "active",
-        "accounts": ["SAV-12345", "CHK-12345"],
+        "accounts": ["SAV-482915", "CHK-482915"],
     },
-    "67890": {
-        "id": "67890",
+    "738204": {
+        "id": "738204",
         "name": "Maria Garcia",
         "email": "maria.garcia@email.com",
         "savings_balance": "$12,750.00",
         "checking_balance": "$3,400.00",
         "status": "active",
-        "accounts": ["SAV-67890", "CHK-67890"],
+        "accounts": ["SAV-738204", "CHK-738204"],
     },
-    "99999": {
-        "id": "99999",
+    "990017": {
+        "id": "990017",
         "name": "Restricted User",
         "email": "restricted@email.com",
         "savings_balance": "$0.00",
@@ -49,7 +49,7 @@ def login():
     if request.method == "POST":
         username = request.form.get("username", "")
         password = request.form.get("password", "")
-        if username == "officer" and password == "bank123":
+        if username == "j.martinez" and password == "REDACTED_PASSWORD":
             session["logged_in"] = True
             session["user"] = username
             session["login_time"] = time.time()

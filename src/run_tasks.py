@@ -43,7 +43,7 @@ EVIDENCE_DIR = Path(__file__).parent.parent / "evidence"
 
 TASKS = {
     "read_balance": {
-        "goal": "Look up member 12345 and read their current savings balance",
+        "goal": "Look up member 482915 and read their current savings balance",
         "task_id":      "read_balance",
         "display_name": "Read Member Savings Balance",
         "description":  "Navigate to a member's profile and extract the current savings account balance.",
@@ -53,16 +53,16 @@ TASKS = {
             {
                 "name":        "member_id",
                 "type":        "string",
-                "description": "The 5-digit member ID to look up",
+                "description": "The 6-digit member ID to look up",
                 "required":    True,
-                "example":     "12345",
+                "example":     "482915",
             }
         ],
         "expected_output": {"savings_balance": "$4,250.00"},
-        "replay_params":   {"member_id": "12345"},
+        "replay_params":   {"member_id": "482915"},
     },
     "open_account": {
-        "goal": "Open a new savings sub-account for member 12345 and reach the confirmation screen",
+        "goal": "Open a new savings sub-account for member 482915 and reach the confirmation screen",
         "task_id":      "open_account",
         "display_name": "Open New Savings Sub-Account",
         "description":  "Navigate to a member's profile, open the account creation form, fill in the details, and reach the confirmation screen.",
@@ -72,9 +72,9 @@ TASKS = {
             {
                 "name":        "member_id",
                 "type":        "string",
-                "description": "The 5-digit member ID for the new account",
+                "description": "The 6-digit member ID for the new account",
                 "required":    True,
-                "example":     "12345",
+                "example":     "482915",
             },
             {
                 "name":        "account_type",
@@ -90,8 +90,8 @@ TASKS = {
         # new_account_number but not a separate confirmation_id (that ID
         # only appears one screen further, on the final confirmation.html;
         # see REPORT.md "Cuts" re: goal-completion ambiguity).
-        "expected_output": {"new_account_number": "SAV-12345-NEW"},
-        "replay_params": {"member_id": "12345", "account_type": "savings"},
+        "expected_output": {"new_account_number": "SAV-482915-NEW"},
+        "replay_params": {"member_id": "482915", "account_type": "savings"},
     },
 }
 

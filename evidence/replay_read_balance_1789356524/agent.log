@@ -1,0 +1,12 @@
+{"ts": 1789356569605, "run_id": "replay_read_balance_1789356524", "level": "INFO", "message": "Logger initialised", "data": {"log_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/replay_read_balance_1789356524/agent.log"}}
+{"ts": 1789356569605, "run_id": "replay_read_balance_1789356524", "level": "INFO", "message": "Replay logger started", "data": {"replay_run_id": "replay_read_balance_1789356524"}}
+{"ts": 1789356570417, "run_id": "replay_read_balance_1789356524", "level": "INFO", "message": "ReplayEngine browser launched", "data": {"run_id": "replay_read_balance_1789356524"}}
+{"ts": 1789356570418, "run_id": "replay_read_balance_1789356524", "level": "INFO", "message": "Replay started", "data": {"artifact_id": "read_balance_1789356569", "task_id": "read_balance", "params": {"member_id": "482915"}}}
+{"ts": 1789356572579, "run_id": "replay_read_balance_1789356524", "level": "DEBUG", "message": "Authenticated", "data": {"url": "http://127.0.0.1:5001/dashboard"}}
+{"ts": 1789356572580, "run_id": "replay_read_balance_1789356524", "level": "DEBUG", "message": "Starting replay", "data": {"url": "http://127.0.0.1:5001/dashboard"}}
+{"ts": 1789356572580, "run_id": "replay_read_balance_1789356524", "level": "INFO", "message": "Skipping login step 1", "data": {}}
+{"ts": 1789356572580, "run_id": "replay_read_balance_1789356524", "level": "INFO", "message": "Skipping login step 2", "data": {}}
+{"ts": 1789356572580, "run_id": "replay_read_balance_1789356524", "level": "INFO", "message": "Skipping login step 3", "data": {}}
+{"ts": 1789356572580, "run_id": "replay_read_balance_1789356524", "level": "INFO", "message": "Skipping login step 4", "data": {}}
+{"ts": 1789356572580, "run_id": "replay_read_balance_1789356524", "level": "INFO", "message": "Skipping login step 5", "data": {}}
+{"ts": 1789356583169, "run_id": "replay_read_balance_1789356524", "level": "INFO", "message": "Replay complete", "data": {"steps_run": 6, "total_time_ms": 12751, "output": {"savings_balance": "$4,250.00"}}}

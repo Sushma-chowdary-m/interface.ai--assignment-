@@ -159,7 +159,7 @@ then return here and click <em>Resume Automation</em>.</p>
   <div class="field">
     <label for="notes">Notes for the agent (optional):</label>
     <textarea id="notes" name="notes" rows="3"
-              placeholder="e.g. I dismissed the error dialog and searched for member 12345"></textarea>
+              placeholder="e.g. I dismissed the error dialog and searched for member 482915"></textarea>
   </div>
   <button type="submit">▶ Resume Automation</button>
 </form>
@@ -430,7 +430,7 @@ if __name__ == "__main__":
         result = await request_escalation(
             page    = page,
             run_id  = "demo_escalation",
-            goal    = "Look up member 12345 savings balance",
+            goal    = "Look up member 482915 savings balance",
             step_num = 5,
             reason  = "Member search returned zero results unexpectedly",
             trigger = "dead_end",

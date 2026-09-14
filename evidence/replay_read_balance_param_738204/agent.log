@@ -1,0 +1,14 @@
+{"ts": 1789359560304, "run_id": "replay_read_balance_param_738204", "level": "INFO", "message": "Logger initialised", "data": {"log_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/replay_read_balance_param_738204/agent.log"}}
+{"ts": 1789359560304, "run_id": "replay_read_balance_param_738204", "level": "INFO", "message": "Replay logger started", "data": {"replay_run_id": "replay_read_balance_param_738204"}}
+{"ts": 1789359561791, "run_id": "replay_read_balance_param_738204", "level": "INFO", "message": "ReplayEngine browser launched", "data": {"run_id": "replay_read_balance_param_738204"}}
+{"ts": 1789359561793, "run_id": "replay_read_balance_param_738204", "level": "INFO", "message": "Replay started", "data": {"artifact_id": "read_balance_1789356569", "task_id": "read_balance", "params": {"member_id": "738204"}}}
+{"ts": 1789359564031, "run_id": "replay_read_balance_param_738204", "level": "DEBUG", "message": "Authenticated", "data": {"url": "http://127.0.0.1:5001/dashboard"}}
+{"ts": 1789359564033, "run_id": "replay_read_balance_param_738204", "level": "DEBUG", "message": "Starting replay", "data": {"url": "http://127.0.0.1:5001/dashboard"}}
+{"ts": 1789359564033, "run_id": "replay_read_balance_param_738204", "level": "INFO", "message": "Skipping login step 1", "data": {}}
+{"ts": 1789359564033, "run_id": "replay_read_balance_param_738204", "level": "INFO", "message": "Skipping login step 2", "data": {}}
+{"ts": 1789359564033, "run_id": "replay_read_balance_param_738204", "level": "INFO", "message": "Skipping login step 3", "data": {}}
+{"ts": 1789359564033, "run_id": "replay_read_balance_param_738204", "level": "INFO", "message": "Skipping login step 4", "data": {}}
+{"ts": 1789359564035, "run_id": "replay_read_balance_param_738204", "level": "INFO", "message": "Skipping login step 5", "data": {}}
+{"ts": 1789359573748, "run_id": "replay_read_balance_param_738204", "level": "WARNING", "message": "Checkpoint mismatch at step 10 — continuing", "data": {"url": "http://127.0.0.1:5001/member/738204"}}
+{"ts": 1789359574780, "run_id": "replay_read_balance_param_738204", "level": "WARNING", "message": "Checkpoint mismatch at step 11 — continuing", "data": {"url": "http://127.0.0.1:5001/member/738204"}}
+{"ts": 1789359574780, "run_id": "replay_read_balance_param_738204", "level": "INFO", "message": "Replay complete", "data": {"steps_run": 6, "total_time_ms": 12986, "output": {"savings_balance": "$12,750.00"}}}

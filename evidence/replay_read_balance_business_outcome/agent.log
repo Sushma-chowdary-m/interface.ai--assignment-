@@ -1,0 +1,12 @@
+{"ts": 1789359574956, "run_id": "replay_read_balance_business_outcome", "level": "INFO", "message": "Logger initialised", "data": {"log_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/replay_read_balance_business_outcome/agent.log"}}
+{"ts": 1789359574956, "run_id": "replay_read_balance_business_outcome", "level": "INFO", "message": "Replay logger started", "data": {"replay_run_id": "replay_read_balance_business_outcome"}}
+{"ts": 1789359576093, "run_id": "replay_read_balance_business_outcome", "level": "INFO", "message": "ReplayEngine browser launched", "data": {"run_id": "replay_read_balance_business_outcome"}}
+{"ts": 1789359576093, "run_id": "replay_read_balance_business_outcome", "level": "INFO", "message": "Replay started", "data": {"artifact_id": "read_balance_1789356569", "task_id": "read_balance", "params": {"member_id": "000000"}}}
+{"ts": 1789359578349, "run_id": "replay_read_balance_business_outcome", "level": "DEBUG", "message": "Authenticated", "data": {"url": "http://127.0.0.1:5001/dashboard"}}
+{"ts": 1789359578349, "run_id": "replay_read_balance_business_outcome", "level": "DEBUG", "message": "Starting replay", "data": {"url": "http://127.0.0.1:5001/dashboard"}}
+{"ts": 1789359578349, "run_id": "replay_read_balance_business_outcome", "level": "INFO", "message": "Skipping login step 1", "data": {}}
+{"ts": 1789359578349, "run_id": "replay_read_balance_business_outcome", "level": "INFO", "message": "Skipping login step 2", "data": {}}
+{"ts": 1789359578349, "run_id": "replay_read_balance_business_outcome", "level": "INFO", "message": "Skipping login step 3", "data": {}}
+{"ts": 1789359578349, "run_id": "replay_read_balance_business_outcome", "level": "INFO", "message": "Skipping login step 4", "data": {}}
+{"ts": 1789359578349, "run_id": "replay_read_balance_business_outcome", "level": "INFO", "message": "Skipping login step 5", "data": {}}
+{"ts": 1789359584942, "run_id": "replay_read_balance_business_outcome", "level": "INFO", "message": "Business outcome at step 9: member_not_found", "data": {"outcome": "member_not_found", "data": {"page_url": "http://127.0.0.1:5001/search", "page_title": "FirstBank Enterprise Portal"}}}
