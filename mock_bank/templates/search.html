@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+    <h1>Member Search</h1>
+    <p>Search by member ID to view account details and balances.</p>
+</div>
+
+<!-- Search form -->
+<div class="card">
+    <h2>Search by Member ID</h2>
+    <form method="POST" action="/search">
+        <div style="display: flex; gap: 16px; align-items: flex-end;">
+            <div class="form-group" style="flex: 1; margin-bottom: 0;">
+                <label>Member ID</label>
+                <input
+                    type="text"
+                    name="member_id"
+                    id="member_id"
+                    placeholder="Enter member ID (e.g. 12345)"
+                    autocomplete="off"
+                />
+            </div>
+            <div>
+                <button type="submit" class="btn-primary" style="padding: 11px 32px;">
+                    Search
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Error state -->
+{% if error %}
+<div class="alert-error">
+    <strong>Not Found:</strong> {{ error }}
+</div>
+{% endif %}
+
+<!-- Result -->
+{% if result %}
+<div class="card">
+    <h2>Search Result</h2>
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Member ID</th>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>{{ result.id }}</strong></td>
+                <td>{{ result.name }}</td>
+                <td>{{ result.email }}</td>
+                <td>
+                    {% if result.status == 'active' %}
+                    <span class="badge badge-active">Active</span>
+                    {% else %}
+                    <span class="badge badge-restricted">Restricted</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="/member/{{ result.id }}" class="btn-secondary"
+                       style="padding: 6px 16px; font-size: 12px;">
+                        View Details
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endif %}
+
+<!-- Help box -->
+<div class="card" style="border-top-color: #c8a400;">
+    <h2 style="color: #744210;">Test Member IDs</h2>
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Member ID</th>
+                <th>Name</th>
+                <th>Expected Result</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>12345</strong></td>
+                <td>John Smith</td>
+                <td><span class="badge badge-active">Active Member</span></td>
+            </tr>
+            <tr>
+                <td><strong>67890</strong></td>
+                <td>Maria Garcia</td>
+                <td><span class="badge badge-active">Active Member</span></td>
+            </tr>
+            <tr>
+                <td><strong>99999</strong></td>
+                <td>Restricted User</td>
+                <td><span class="badge badge-restricted">Permission Denied</span></td>
+            </tr>
+            <tr>
+                <td><strong>00000</strong></td>
+                <td>—</td>
+                <td><span class="badge badge-restricted">Not Found</span></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

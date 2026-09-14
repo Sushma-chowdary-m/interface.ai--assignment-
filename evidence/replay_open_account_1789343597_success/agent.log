@@ -1,0 +1,14 @@
+{"ts": 1789346333206, "run_id": "verify_open_account3", "level": "INFO", "message": "Logger initialised", "data": {"log_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/verify_open_account3/agent.log"}}
+{"ts": 1789346333206, "run_id": "verify_open_account3", "level": "INFO", "message": "Replay logger started", "data": {"replay_run_id": "verify_open_account3"}}
+{"ts": 1789346334401, "run_id": "verify_open_account3", "level": "INFO", "message": "ReplayEngine browser launched", "data": {"run_id": "verify_open_account3"}}
+{"ts": 1789346334403, "run_id": "verify_open_account3", "level": "INFO", "message": "Replay started", "data": {"artifact_id": "open_account_1789343703", "task_id": "open_account", "params": {"member_id": "12345", "account_type": "savings"}}}
+{"ts": 1789346336642, "run_id": "verify_open_account3", "level": "DEBUG", "message": "Authenticated", "data": {"url": "http://127.0.0.1:5001/dashboard"}}
+{"ts": 1789346336642, "run_id": "verify_open_account3", "level": "DEBUG", "message": "Starting replay", "data": {"url": "http://127.0.0.1:5001/dashboard"}}
+{"ts": 1789346336642, "run_id": "verify_open_account3", "level": "INFO", "message": "Skipping login step 1", "data": {}}
+{"ts": 1789346336642, "run_id": "verify_open_account3", "level": "INFO", "message": "Skipping login step 2", "data": {}}
+{"ts": 1789346336642, "run_id": "verify_open_account3", "level": "INFO", "message": "Skipping login step 3", "data": {}}
+{"ts": 1789346336642, "run_id": "verify_open_account3", "level": "INFO", "message": "Skipping login step 4", "data": {}}
+{"ts": 1789346336642, "run_id": "verify_open_account3", "level": "INFO", "message": "Skipping login step 5", "data": {}}
+{"ts": 1789346353787, "run_id": "verify_open_account3", "level": "WARNING", "message": "Auto-approving RISKY step 15 (CI mode)", "data": {"description": "Click the OPEN SUB-ACCOUNT button to begin opening a new savings sub-account for member 12345"}}
+{"ts": 1789346360554, "run_id": "verify_open_account3", "level": "WARNING", "message": "Auto-approving RISKY step 19 (CI mode)", "data": {"description": "Click the REVIEW & CONFIRM button to proceed to the confirmation screen"}}
+{"ts": 1789346368645, "run_id": "verify_open_account3", "level": "INFO", "message": "Replay complete", "data": {"steps_run": 15, "total_time_ms": 34242, "output": {"new_account_number": "SAV-12345-NEW"}}}

@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+    <h1>System Error</h1>
+    <p>An error was encountered while processing your request.</p>
+</div>
+
+<!-- Error box -->
+<div class="card" style="border-top-color: #e53e3e;">
+    <h2 style="color: #c53030;">Error Details</h2>
+
+    <div class="alert-error" style="font-size: 14px; padding: 16px 20px;">
+        <strong>&#10007; Error:</strong> {{ message }}
+    </div>
+
+    <table class="data-table" style="margin-bottom: 24px;">
+        <tbody>
+            <tr>
+                <td style="width: 220px; color: #666; text-transform: uppercase;
+                           font-size: 11px; letter-spacing: 0.5px;">Error Type</td>
+                <td id="error-type">
+                    {% if 'not found' in message.lower() %}
+                        <span class="badge badge-restricted">Member Not Found</span>
+                    {% elif 'permission' in message.lower() %}
+                        <span class="badge badge-restricted">Permission Denied</span>
+                    {% elif 'session' in message.lower() %}
+                        <span class="badge badge-restricted">Session Expired</span>
+                    {% else %}
+                        <span class="badge badge-restricted">System Error</span>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td style="color: #666; text-transform: uppercase;
+                           font-size: 11px; letter-spacing: 0.5px;">Error Message</td>
+                <td id="error-message">{{ message }}</td>
+            </tr>
+            <tr>
+                <td style="color: #666; text-transform: uppercase;
+                           font-size: 11px; letter-spacing: 0.5px;">Recommended Action</td>
+                <td>
+                    {% if 'not found' in message.lower() %}
+                        Verify the member ID and try again.
+                    {% elif 'permission' in message.lower() %}
+                        Contact your supervisor for access. Do not attempt to bypass restrictions.
+                    {% elif 'session' in message.lower() %}
+                        Your session has expired. Please sign in again.
+                    {% else %}
+                        Contact IT support if this error persists.
+                    {% endif %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div style="display: flex; gap: 16px;">
+        <a href="/search" class="btn-primary">Back to Search</a>
+        <a href="/dashboard" class="btn-secondary">Back to Dashboard</a>
+    </div>
+</div>
+
+<!-- Audit notice -->
+<div class="alert-warning">
+    <strong>Audit Notice:</strong> This error has been logged automatically.
+    Error reference: ERR-{{ range(10000, 99999) | random }}
+</div>
+
+{% endblock %}

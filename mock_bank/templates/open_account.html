@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+    <h1>Open Sub-Account</h1>
+    <p>Create a new sub-account for member {{ member.id }} — {{ member.name }}</p>
+</div>
+
+{% if not confirmation %}
+<!-- Step 1: Form -->
+<div class="card">
+    <h2>Account Details</h2>
+    <form method="POST" action="/member/{{ member.id }}/open-account">
+        <div class="form-group">
+            <label>Account Type</label>
+            <select name="account_type" id="account_type" required>
+                <option value="">-- Select account type --</option>
+                <option value="savings">Savings Account</option>
+                <option value="checking">Checking Account</option>
+                <option value="money_market">Money Market Account</option>
+                <option value="cd">Certificate of Deposit (CD)</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Initial Deposit Amount</label>
+            <input
+                type="text"
+                name="initial_deposit"
+                id="initial_deposit"
+                placeholder="e.g. 500.00"
+                autocomplete="off"
+            />
+        </div>
+
+        <div class="alert-warning" style="margin-top: 8px;">
+            <strong>Important:</strong> Review all details carefully before submitting.
+            Account creation is subject to compliance review.
+        </div>
+
+        <div style="margin-top: 24px; display: flex; gap: 16px;">
+            <button type="submit" class="btn-primary">
+                Review &amp; Confirm
+            </button>
+            <a href="/member/{{ member.id }}" class="btn-secondary">
+                Cancel
+            </a>
+        </div>
+    </form>
+</div>
+
+{% else %}
+<!-- Step 2: Confirmation screen -->
+<div class="card" style="border-top-color: #c8a400;">
+    <h2>Confirm Account Opening</h2>
+
+    <div class="alert-warning">
+        <strong>Please review carefully.</strong> Once confirmed, this action will
+        create a new account and cannot be undone without supervisor approval.
+    </div>
+
+    <table class="data-table" style="margin-bottom: 24px;">
+        <tbody>
+            <tr>
+                <td style="width: 220px; color: #666; text-transform: uppercase;
+                           font-size: 11px; letter-spacing: 0.5px;">Member ID</td>
+                <td><strong>{{ confirmation.member_id }}</strong></td>
+            </tr>
+            <tr>
+                <td style="color: #666; text-transform: uppercase;
+                           font-size: 11px; letter-spacing: 0.5px;">Member Name</td>
+                <td>{{ confirmation.member_name }}</td>
+            </tr>
+            <tr>
+                <td style="color: #666; text-transform: uppercase;
+                           font-size: 11px; letter-spacing: 0.5px;">Account Type</td>
+                <td><strong>{{ confirmation.account_type | title }}</strong></td>
+            </tr>
+            <tr>
+                <td style="color: #666; text-transform: uppercase;
+                           font-size: 11px; letter-spacing: 0.5px;">Initial Deposit</td>
+                <td><strong>${{ confirmation.initial_deposit }}</strong></td>
+            </tr>
+            <tr>
+                <td style="color: #666; text-transform: uppercase;
+                           font-size: 11px; letter-spacing: 0.5px;">New Account Number</td>
+                <td><strong>{{ confirmation.new_account_number }}</strong></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <form method="POST" action="/member/{{ confirmation.member_id }}/confirm-account">
+        <input type="hidden" name="account_type" value="{{ confirmation.account_type }}" />
+        <input type="hidden" name="initial_deposit" value="{{ confirmation.initial_deposit }}" />
+        <div style="display: flex; gap: 16px;">
+            <button type="submit" class="btn-gold" id="confirm-button">
+                Confirm &amp; Create Account
+            </button>
+            <a href="/member/{{ confirmation.member_id }}/open-account" class="btn-secondary">
+                Go Back
+            </a>
+        </div>
+    </form>
+</div>
+{% endif %}
+
+{% endblock %}

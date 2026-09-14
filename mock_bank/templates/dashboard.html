@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+    <h1>Dashboard</h1>
+    <p>Welcome back, {{ user }}. Select an action to get started.</p>
+</div>
+
+<!-- Quick stats row -->
+<div style="display: flex; gap: 16px; margin-bottom: 28px;">
+    <div style="flex: 1; background: #003087; color: white; padding: 20px 24px; border-top: 3px solid #c8a400;">
+        <div style="font-size: 11px; color: #a0b8d8; text-transform: uppercase; letter-spacing: 0.5px;">
+            Total Members
+        </div>
+        <div style="font-size: 28px; color: #c8a400; margin-top: 6px;">2,847</div>
+        <div style="font-size: 11px; color: #a0b8d8; margin-top: 4px;">Active accounts</div>
+    </div>
+    <div style="flex: 1; background: #003087; color: white; padding: 20px 24px; border-top: 3px solid #c8a400;">
+        <div style="font-size: 11px; color: #a0b8d8; text-transform: uppercase; letter-spacing: 0.5px;">
+            Transactions Today
+        </div>
+        <div style="font-size: 28px; color: #c8a400; margin-top: 6px;">143</div>
+        <div style="font-size: 11px; color: #a0b8d8; margin-top: 4px;">Processed successfully</div>
+    </div>
+    <div style="flex: 1; background: #003087; color: white; padding: 20px 24px; border-top: 3px solid #c8a400;">
+        <div style="font-size: 11px; color: #a0b8d8; text-transform: uppercase; letter-spacing: 0.5px;">
+            Pending Reviews
+        </div>
+        <div style="font-size: 28px; color: #c8a400; margin-top: 6px;">7</div>
+        <div style="font-size: 11px; color: #a0b8d8; margin-top: 4px;">Require officer action</div>
+    </div>
+    <div style="flex: 1; background: #003087; color: white; padding: 20px 24px; border-top: 3px solid #c8a400;">
+        <div style="font-size: 11px; color: #a0b8d8; text-transform: uppercase; letter-spacing: 0.5px;">
+            System Status
+        </div>
+        <div style="font-size: 28px; color: #c8a400; margin-top: 6px;">&#9679;</div>
+        <div style="font-size: 11px; color: #a0b8d8; margin-top: 4px;">All systems operational</div>
+    </div>
+</div>
+
+<!-- Quick actions -->
+<div class="card">
+    <h2>Quick Actions</h2>
+    <div style="display: flex; gap: 16px;">
+        <a href="/search" class="btn-primary" style="text-decoration: none; padding: 13px 28px;">
+            Search Member
+        </a>
+        <a href="/search" class="btn-secondary" style="padding: 13px 28px;">
+            View All Members
+        </a>
+    </div>
+</div>
+
+<!-- Recent activity table -->
+<div class="card">
+    <h2>Recent Activity</h2>
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Officer</th>
+                <th>Action</th>
+                <th>Member ID</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>09:42 AM</td>
+                <td>officer</td>
+                <td>Account Lookup</td>
+                <td>12345</td>
+                <td><span class="badge badge-active">Success</span></td>
+            </tr>
+            <tr>
+                <td>09:38 AM</td>
+                <td>officer</td>
+                <td>Sub-account Opened</td>
+                <td>67890</td>
+                <td><span class="badge badge-active">Success</span></td>
+            </tr>
+            <tr>
+                <td>09:21 AM</td>
+                <td>officer</td>
+                <td>Account Lookup</td>
+                <td>00000</td>
+                <td><span class="badge badge-restricted">Not Found</span></td>
+            </tr>
+            <tr>
+                <td>09:10 AM</td>
+                <td>officer</td>
+                <td>Balance Inquiry</td>
+                <td>12345</td>
+                <td><span class="badge badge-active">Success</span></td>
+            </tr>
+            <tr>
+                <td>08:55 AM</td>
+                <td>officer</td>
+                <td>Account Lookup</td>
+                <td>99999</td>
+                <td><span class="badge badge-restricted">Restricted</span></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- System notice -->
+<div class="alert-warning">
+    <strong>System Notice:</strong> Scheduled maintenance window tonight 11:00 PM – 1:00 AM EST.
+    The portal may be intermittently unavailable during this period.
+</div>
+
+{% endblock %}

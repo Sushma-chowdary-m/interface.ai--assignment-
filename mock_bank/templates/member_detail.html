@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+    <h1>Member Detail</h1>
+    <p>Viewing account information for member {{ member.id }}</p>
+</div>
+
+<!-- Member info card -->
+<div class="card">
+    <h2>Member Information</h2>
+    <table class="data-table">
+        <tbody>
+            <tr>
+                <td style="width: 200px; color: #666; text-transform: uppercase;
+                           font-size: 11px; letter-spacing: 0.5px;">Member ID</td>
+                <td><strong>{{ member.id }}</strong></td>
+            </tr>
+            <tr>
+                <td style="color: #666; text-transform: uppercase;
+                           font-size: 11px; letter-spacing: 0.5px;">Full Name</td>
+                <td>{{ member.name }}</td>
+            </tr>
+            <tr>
+                <td style="color: #666; text-transform: uppercase;
+                           font-size: 11px; letter-spacing: 0.5px;">Email</td>
+                <td>{{ member.email }}</td>
+            </tr>
+            <tr>
+                <td style="color: #666; text-transform: uppercase;
+                           font-size: 11px; letter-spacing: 0.5px;">Status</td>
+                <td>
+                    {% if member.status == 'active' %}
+                    <span class="badge badge-active">Active</span>
+                    {% else %}
+                    <span class="badge badge-restricted">Restricted</span>
+                    {% endif %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Balance card -->
+<div class="card">
+    <h2>Account Balances</h2>
+    <div style="display: flex; gap: 16px; margin-bottom: 20px;">
+        <div class="balance-box">
+            <div class="label">Savings Balance</div>
+            <div class="amount" id="savings-balance">{{ member.savings_balance }}</div>
+        </div>
+        <div class="balance-box">
+            <div class="label">Checking Balance</div>
+            <div class="amount" id="checking-balance">{{ member.checking_balance }}</div>
+        </div>
+    </div>
+</div>
+
+<!-- Accounts table -->
+<div class="card">
+    <h2>Linked Accounts</h2>
+    {% if member.accounts %}
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Account Number</th>
+                <th>Type</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for account in member.accounts %}
+            <tr>
+                <td><strong>{{ account }}</strong></td>
+                <td>
+                    {% if 'SAV' in account %}Savings
+                    {% elif 'CHK' in account %}Checking
+                    {% else %}Other{% endif %}
+                </td>
+                <td><span class="badge badge-active">Active</span></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="alert-warning">No accounts linked to this member.</div>
+    {% endif %}
+</div>
+
+<!-- Actions -->
+<div class="card">
+    <h2>Actions</h2>
+    <div style="display: flex; gap: 16px;">
+        <a href="/member/{{ member.id }}/open-account" class="btn-gold">
+            Open Sub-Account
+        </a>
+        <a href="/search" class="btn-secondary">
+            Back to Search
+        </a>
+    </div>
+</div>
+
+{% endblock %}

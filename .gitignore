@@ -1,0 +1,30 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+.pytest_cache/
+
+# Environment — NEVER commit your API key
+.env
+
+# evidence/ and artifacts/ ARE committed — the assignment explicitly requires
+# real discovery/replay evidence in the repo. Only ignore stray debug/scratch
+# output so a future local run doesn't get accidentally re-added wholesale.
+evidence/*_fix_test*/
+evidence/*.tmp
+
+# Leftover manual-testing artifact — not part of the submission
+cookies.txt
+
+# VS Code
+.vscode/
+
+# Mac
+.DS_Store
+
+# Playwright
+playwright-report/
+test-results/

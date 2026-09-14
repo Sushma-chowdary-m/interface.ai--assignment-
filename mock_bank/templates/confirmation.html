@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+    <h1>Account Created Successfully</h1>
+    <p>Sub-account has been opened for member {{ member.id }}</p>
+</div>
+
+<!-- Success banner -->
+<div class="alert-success" style="padding: 16px 20px; font-size: 14px;">
+    <strong>&#10003; Success!</strong> The new account has been created and is now active.
+    A confirmation has been sent to {{ member.email }}.
+</div>
+
+<!-- Confirmation details -->
+<div class="card" style="border-top-color: #38a169;">
+    <h2>Confirmation Details</h2>
+    <table class="data-table" style="margin-bottom: 8px;">
+        <tbody>
+            <tr>
+                <td style="width: 220px; color: #666; text-transform: uppercase;
+                           font-size: 11px; letter-spacing: 0.5px;">Confirmation ID</td>
+                <td><strong id="confirmation-id">CONF-{{ member.id }}-{{ account_type[:3].upper() }}</strong></td>
+            </tr>
+            <tr>
+                <td style="color: #666; text-transform: uppercase;
+                           font-size: 11px; letter-spacing: 0.5px;">Member ID</td>
+                <td><strong>{{ member.id }}</strong></td>
+            </tr>
+            <tr>
+                <td style="color: #666; text-transform: uppercase;
+                           font-size: 11px; letter-spacing: 0.5px;">Member Name</td>
+                <td>{{ member.name }}</td>
+            </tr>
+            <tr>
+                <td style="color: #666; text-transform: uppercase;
+                           font-size: 11px; letter-spacing: 0.5px;">Account Type</td>
+                <td><strong>{{ account_type | title }}</strong></td>
+            </tr>
+            <tr>
+                <td style="color: #666; text-transform: uppercase;
+                           font-size: 11px; letter-spacing: 0.5px;">Initial Deposit</td>
+                <td><strong>${{ initial_deposit }}</strong></td>
+            </tr>
+            <tr>
+                <td style="color: #666; text-transform: uppercase;
+                           font-size: 11px; letter-spacing: 0.5px;">New Account Number</td>
+                <td><strong id="new-account-number">{{ new_account }}</strong></td>
+            </tr>
+            <tr>
+                <td style="color: #666; text-transform: uppercase;
+                           font-size: 11px; letter-spacing: 0.5px;">Status</td>
+                <td><span class="badge badge-active">Active</span></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Compliance notice -->
+<div class="card" style="border-top-color: #c8a400;">
+    <h2 style="color: #744210;">Compliance Notice</h2>
+    <p style="font-size: 13px; color: #555; line-height: 1.7;">
+        This account opening has been logged for compliance and audit purposes.
+        The member will receive written confirmation within 2 business days.
+        If this action was performed in error, contact your supervisor immediately
+        to initiate the reversal process.
+    </p>
+</div>
+
+<!-- Actions -->
+<div class="card">
+    <h2>Next Steps</h2>
+    <div style="display: flex; gap: 16px;">
+        <a href="/member/{{ member.id }}" class="btn-primary">
+            View Member Profile
+        </a>
+        <a href="/search" class="btn-secondary">
+            Search Another Member
+        </a>
+        <a href="/dashboard" class="btn-secondary">
+            Back to Dashboard
+        </a>
+    </div>
+</div>
+
+{% endblock %}
