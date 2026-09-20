@@ -1,0 +1,34 @@
+[
+  {
+    "task_id": "open_account",
+    "display_name": "Open New Savings Sub-Account",
+    "discovery": {
+      "success": true,
+      "steps": 20,
+      "stop_reason": "goal_met",
+      "extracted_data": {
+        "member_id": "482915",
+        "member_name": "John Smith",
+        "account_type": "Savings",
+        "initial_deposit": "$500.00",
+        "new_account_number": "SAV-482915-NEW",
+        "status": "Confirmation screen reached successfully"
+      },
+      "time_s": 131.88
+    },
+    "artifact": {
+      "path": "/Users/sushmamallampati/interface-ai-assignment/artifacts/open_account_v1_0.json",
+      "step_count": 20,
+      "risky_steps": 1
+    },
+    "replay": {
+      "success": true,
+      "output": {
+        "new_account_number": "SAV-482915-NEW"
+      },
+      "stop_reason": "complete",
+      "error": null,
+      "time_s": 41.06
+    }
+  }
+]

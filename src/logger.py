@@ -101,6 +101,19 @@ class AgentLogger:
     def step(self, step: "AgentStep") -> None:
         """Log a completed agent step in structured form."""
         a = step.action
+
+        # sanitize_artifact() only catches a value sitting next to a
+        # "name": "password" sibling key (the InputParameter/OutputExtraction
+        # shape). A step log has no such sibling — it's a flat
+        # {selector, value} pair — so a `type` action into a password field
+        # would otherwise write the plaintext credential straight into
+        # agent.log. Redact by selector instead: any field whose selector
+        # names "password" gets its value blanked regardless of content,
+        # so this doesn't depend on knowing the credential value in advance.
+        action_value = a.value
+        if a.kind.value == "type" and a.selector and "password" in a.selector.lower():
+            action_value = "[REDACTED]"
+
         self._write(LogLevel.STEP, f"Step {step.step_number}: {a.description}", {
             "step_number":     step.step_number,
             "timestamp_ms":    step.timestamp_ms,
@@ -108,7 +121,7 @@ class AgentLogger:
             "page_title":      step.page_title,
             "action_kind":     a.kind.value,
             "action_selector": a.selector,
-            "action_value":    a.value,       # passwords already blocked by guardrails
+            "action_value":    action_value,
             "description":     a.description,
             "success":         a.success,
             "error":           a.error,

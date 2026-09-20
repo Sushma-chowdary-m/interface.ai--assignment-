@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "artifact_id": "open_account_1789358038",
-  "created_at_ms": 1789358038626,
+  "artifact_id": "open_account_1789870892",
+  "created_at_ms": 1789870892026,
   "task": {
     "task_id": "open_account",
     "display_name": "Open New Savings Sub-Account",
@@ -31,7 +31,7 @@
     {
       "step_number": 1,
       "action_kind": "click",
-      "description": "Click the username field to begin login process",
+      "description": "Click the username input field to begin login.",
       "locator": {
         "primary": "input[name='username']",
         "fallbacks": [],
@@ -56,8 +56,8 @@
       "timeout_ms": 10000,
       "retry_count": 2,
       "on_failure": "stop",
-      "duration_ms": 698,
-      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789357889889_step_01_post.png",
+      "duration_ms": 714,
+      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789870765802_step_01_post.png",
       "page_url": "http://127.0.0.1:5001/login",
       "page_title": "FirstBank Enterprise Portal"
     },
@@ -96,15 +96,15 @@
       "timeout_ms": 10000,
       "retry_count": 2,
       "on_failure": "stop",
-      "duration_ms": 1062,
-      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789357893387_step_02_post.png",
+      "duration_ms": 1072,
+      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789870769584_step_02_post.png",
       "page_url": "http://127.0.0.1:5001/login",
       "page_title": "FirstBank Enterprise Portal"
     },
     {
       "step_number": 3,
       "action_kind": "click",
-      "description": "Click the password field to enter the password",
+      "description": "Click the password field to prepare for typing the password.",
       "locator": {
         "primary": "input[name='password']",
         "fallbacks": [],
@@ -129,15 +129,15 @@
       "timeout_ms": 10000,
       "retry_count": 2,
       "on_failure": "stop",
-      "duration_ms": 684,
-      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789357896645_step_03_post.png",
+      "duration_ms": 651,
+      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789870773154_step_03_post.png",
       "page_url": "http://127.0.0.1:5001/login",
       "page_title": "FirstBank Enterprise Portal"
     },
     {
       "step_number": 4,
       "action_kind": "type",
-      "description": "Type the password into the password field",
+      "description": "Type the password into the password field.",
       "locator": {
         "primary": "input[name='password']",
         "fallbacks": [],
@@ -169,15 +169,15 @@
       "timeout_ms": 10000,
       "retry_count": 2,
       "on_failure": "stop",
-      "duration_ms": 1245,
-      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789357902429_step_04_post.png",
+      "duration_ms": 1226,
+      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789870777312_step_04_post.png",
       "page_url": "http://127.0.0.1:5001/login",
       "page_title": "FirstBank Enterprise Portal"
     },
     {
       "step_number": 5,
       "action_kind": "click",
-      "description": "Click the Sign In to Portal button to log in",
+      "description": "Click the Sign In to Portal button to log in.",
       "locator": {
         "primary": "button[type='submit']",
         "fallbacks": [
@@ -205,20 +205,18 @@
       "timeout_ms": 10000,
       "retry_count": 2,
       "on_failure": "stop",
-      "duration_ms": 686,
-      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789357905871_step_05_post.png",
+      "duration_ms": 675,
+      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789870780234_step_05_post.png",
       "page_url": "http://127.0.0.1:5001/dashboard",
       "page_title": "FirstBank Enterprise Portal"
     },
     {
       "step_number": 6,
       "action_kind": "click",
-      "description": "Click the Search Member button to find member 482915",
+      "description": "Click on Member Search to find member 482915",
       "locator": {
         "primary": "a[href='/search']",
-        "fallbacks": [
-          "role=button:Search Member"
-        ],
+        "fallbacks": [],
         "frame": null
       },
       "inputs": [],
@@ -240,15 +238,15 @@
       "timeout_ms": 10000,
       "retry_count": 2,
       "on_failure": "stop",
-      "duration_ms": 686,
-      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789357909601_step_06_post.png",
+      "duration_ms": 690,
+      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789870786613_step_06_post.png",
       "page_url": "http://127.0.0.1:5001/search",
       "page_title": "FirstBank Enterprise Portal"
     },
     {
       "step_number": 7,
       "action_kind": "click",
-      "description": "Click the Member ID input field to enter the member ID",
+      "description": "Click on the Member ID input field to prepare for typing the member ID.",
       "locator": {
         "primary": "placeholder=Enter member ID (e.g. 482915)",
         "fallbacks": [
@@ -276,8 +274,8 @@
       "timeout_ms": 10000,
       "retry_count": 2,
       "on_failure": "stop",
-      "duration_ms": 661,
-      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789357913483_step_07_post.png",
+      "duration_ms": 673,
+      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789870791042_step_07_post.png",
       "page_url": "http://127.0.0.1:5001/search",
       "page_title": "FirstBank Enterprise Portal"
     },
@@ -319,8 +317,8 @@
       "timeout_ms": 10000,
       "retry_count": 2,
       "on_failure": "stop",
-      "duration_ms": 873,
-      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789357916948_step_08_post.png",
+      "duration_ms": 895,
+      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789870795380_step_08_post.png",
       "page_url": "http://127.0.0.1:5001/search",
       "page_title": "FirstBank Enterprise Portal"
     },
@@ -355,8 +353,8 @@
       "timeout_ms": 10000,
       "retry_count": 2,
       "on_failure": "stop",
-      "duration_ms": 674,
-      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789357920446_step_09_post.png",
+      "duration_ms": 683,
+      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789870798896_step_09_post.png",
       "page_url": "http://127.0.0.1:5001/search",
       "page_title": "FirstBank Enterprise Portal"
     },
@@ -387,18 +385,18 @@
       ],
       "risk_level": "caution",
       "is_reversible": true,
-      "timeout_ms": 62001,
+      "timeout_ms": 62148,
       "retry_count": 2,
       "on_failure": "stop",
-      "duration_ms": 20667,
-      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789357944128_step_10_post.png",
+      "duration_ms": 20716,
+      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789870822444_step_10_post.png",
       "page_url": "http://127.0.0.1:5001/member/482915",
       "page_title": "FirstBank Enterprise Portal"
     },
     {
       "step_number": 11,
       "action_kind": "wait",
-      "description": "Scroll down to see more account options and find the option to open a new savings sub-account",
+      "description": "Scroll down to find options for opening a new sub-account",
       "locator": null,
       "inputs": [],
       "outputs": [],
@@ -419,15 +417,15 @@
       "timeout_ms": 10000,
       "retry_count": 2,
       "on_failure": "skip",
-      "duration_ms": 1605,
-      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789357949254_step_11_post.png",
+      "duration_ms": 1604,
+      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789870827975_step_11_post.png",
       "page_url": "http://127.0.0.1:5001/member/482915",
       "page_title": "FirstBank Enterprise Portal"
     },
     {
       "step_number": 12,
       "action_kind": "wait",
-      "description": "Scroll down to see more account options including the option to open a new savings sub-account",
+      "description": "Scrolling down to find the option to open a new sub-account",
       "locator": null,
       "inputs": [],
       "outputs": [],
@@ -449,14 +447,43 @@
       "retry_count": 2,
       "on_failure": "skip",
       "duration_ms": 1601,
-      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789357954143_step_12_post.png",
+      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789870833301_step_12_post.png",
       "page_url": "http://127.0.0.1:5001/member/482915",
       "page_title": "FirstBank Enterprise Portal"
     },
     {
       "step_number": 13,
+      "action_kind": "wait",
+      "description": "Scroll down to find the option to open a new sub-account on this member detail page",
+      "locator": null,
+      "inputs": [],
+      "outputs": [],
+      "checkpoints": [
+        {
+          "kind": "url_contains",
+          "value": "/member/482915",
+          "selector": null
+        },
+        {
+          "kind": "title_contains",
+          "value": "FirstBank Enterprise Portal",
+          "selector": null
+        }
+      ],
+      "risk_level": "safe",
+      "is_reversible": true,
+      "timeout_ms": 10000,
+      "retry_count": 2,
+      "on_failure": "skip",
+      "duration_ms": 1602,
+      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789870839322_step_13_post.png",
+      "page_url": "http://127.0.0.1:5001/member/482915",
+      "page_title": "FirstBank Enterprise Portal"
+    },
+    {
+      "step_number": 14,
       "action_kind": "navigate",
-      "description": "Scroll to the bottom of the page to find account management options",
+      "description": "Scroll to the bottom of the page to find the option to open a new sub-account",
       "locator": null,
       "inputs": [
         {
@@ -484,15 +511,15 @@
       "timeout_ms": 10000,
       "retry_count": 2,
       "on_failure": "retry",
-      "duration_ms": 623,
-      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789357958418_step_13_post.png",
+      "duration_ms": 620,
+      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789870846759_step_14_post.png",
       "page_url": "http://127.0.0.1:5001/member/482915",
       "page_title": "FirstBank Enterprise Portal"
     },
     {
       "step_number": 15,
       "action_kind": "click",
-      "description": "Click the OPEN SUB-ACCOUNT button to initiate opening a new savings sub-account",
+      "description": "Click the OPEN SUB-ACCOUNT button to begin opening a new savings sub-account for member 482915",
       "locator": {
         "primary": "a[href*='open-account']",
         "fallbacks": [
@@ -516,11 +543,11 @@
       ],
       "risk_level": "caution",
       "is_reversible": true,
-      "timeout_ms": 62616,
+      "timeout_ms": 62778,
       "retry_count": 2,
       "on_failure": "stop",
-      "duration_ms": 20872,
-      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789358015521_step_15_post.png",
+      "duration_ms": 20926,
+      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789870870793_step_15_post.png",
       "page_url": "http://127.0.0.1:5001/member/482915/open-account",
       "page_title": "FirstBank Enterprise Portal"
     },
@@ -536,7 +563,14 @@
         ],
         "frame": null
       },
-      "inputs": [],
+      "inputs": [
+        {
+          "name": "account_type",
+          "value": "savings",
+          "is_templated": true,
+          "template_key": "{{account_type}}"
+        }
+      ],
       "outputs": [],
       "checkpoints": [
         {
@@ -555,8 +589,8 @@
       "timeout_ms": 10000,
       "retry_count": 2,
       "on_failure": "stop",
-      "duration_ms": 646,
-      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789358019115_step_16_post.png",
+      "duration_ms": 640,
+      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789870874134_step_16_post.png",
       "page_url": "http://127.0.0.1:5001/member/482915/open-account",
       "page_title": "FirstBank Enterprise Portal"
     },
@@ -588,15 +622,15 @@
       "timeout_ms": 10000,
       "retry_count": 2,
       "on_failure": "stop",
-      "duration_ms": 649,
-      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789358023337_step_17_post.png",
+      "duration_ms": 656,
+      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789870878394_step_17_post.png",
       "page_url": "http://127.0.0.1:5001/member/482915/open-account",
       "page_title": "FirstBank Enterprise Portal"
     },
     {
       "step_number": 18,
       "action_kind": "type",
-      "description": "Type 500.00 as the initial deposit amount",
+      "description": "Type the initial deposit amount of 500.00 into the deposit field",
       "locator": {
         "primary": "input[placeholder='e.g. 500.00']",
         "fallbacks": [],
@@ -628,8 +662,8 @@
       "timeout_ms": 10000,
       "retry_count": 2,
       "on_failure": "stop",
-      "duration_ms": 879,
-      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789358027038_step_18_post.png",
+      "duration_ms": 881,
+      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789870883183_step_18_post.png",
       "page_url": "http://127.0.0.1:5001/member/482915/open-account",
       "page_title": "FirstBank Enterprise Portal"
     },
@@ -664,15 +698,15 @@
       "timeout_ms": 10000,
       "retry_count": 2,
       "on_failure": "escalate",
-      "duration_ms": 734,
-      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789358033427_step_19_post.png",
+      "duration_ms": 662,
+      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789870887453_step_19_post.png",
       "page_url": "http://127.0.0.1:5001/member/482915/open-account",
       "page_title": "FirstBank Enterprise Portal"
     },
     {
       "step_number": 20,
       "action_kind": "done",
-      "description": "The confirmation screen has been reached successfully showing all account details for the new savings sub-account.",
+      "description": "The confirmation screen has been reached successfully with all required details visible.",
       "locator": null,
       "inputs": [],
       "outputs": [
@@ -743,7 +777,7 @@
       "retry_count": 2,
       "on_failure": "stop",
       "duration_ms": 0,
-      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789358033491_step_20.png",
+      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789870887504_step_20.png",
       "page_url": "http://127.0.0.1:5001/member/482915/open-account",
       "page_title": "FirstBank Enterprise Portal"
     }
@@ -754,7 +788,7 @@
     "account_type": "Savings",
     "initial_deposit": "$500.00",
     "new_account_number": "SAV-482915-NEW",
-    "status": "Confirmation screen reached \u2014 account not yet created"
+    "status": "Confirmation screen reached successfully"
   },
-  "notes": "Discovery run completed in 152675ms with 20 steps. Stop reason: goal_met."
+  "notes": "Discovery run completed in 129881ms with 20 steps. Stop reason: goal_met."
 }

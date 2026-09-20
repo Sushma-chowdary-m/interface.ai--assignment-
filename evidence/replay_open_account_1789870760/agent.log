@@ -1,0 +1,13 @@
+{"ts": 1789870892028, "run_id": "replay_open_account_1789870760", "level": "INFO", "message": "Logger initialised", "data": {"log_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/replay_open_account_1789870760/agent.log"}}
+{"ts": 1789870892028, "run_id": "replay_open_account_1789870760", "level": "INFO", "message": "Replay logger started", "data": {"replay_run_id": "replay_open_account_1789870760"}}
+{"ts": 1789870893312, "run_id": "replay_open_account_1789870760", "level": "INFO", "message": "ReplayEngine browser launched", "data": {"run_id": "replay_open_account_1789870760"}}
+{"ts": 1789870893313, "run_id": "replay_open_account_1789870760", "level": "INFO", "message": "Replay started", "data": {"artifact_id": "open_account_1789870892", "task_id": "open_account", "params": {"member_id": "482915", "account_type": "savings"}}}
+{"ts": 1789870895521, "run_id": "replay_open_account_1789870760", "level": "DEBUG", "message": "Authenticated", "data": {"url": "http://127.0.0.1:5001/dashboard"}}
+{"ts": 1789870895521, "run_id": "replay_open_account_1789870760", "level": "DEBUG", "message": "Starting replay", "data": {"url": "http://127.0.0.1:5001/dashboard"}}
+{"ts": 1789870895521, "run_id": "replay_open_account_1789870760", "level": "INFO", "message": "Skipping login step 1", "data": {}}
+{"ts": 1789870895521, "run_id": "replay_open_account_1789870760", "level": "INFO", "message": "Skipping login step 2", "data": {}}
+{"ts": 1789870895521, "run_id": "replay_open_account_1789870760", "level": "INFO", "message": "Skipping login step 3", "data": {}}
+{"ts": 1789870895521, "run_id": "replay_open_account_1789870760", "level": "INFO", "message": "Skipping login step 4", "data": {}}
+{"ts": 1789870895521, "run_id": "replay_open_account_1789870760", "level": "INFO", "message": "Skipping login step 5", "data": {}}
+{"ts": 1789870924637, "run_id": "replay_open_account_1789870760", "level": "WARNING", "message": "Auto-approving RISKY step 19 (CI mode)", "data": {"description": "Click the REVIEW & CONFIRM button to proceed to the confirmation screen"}}
+{"ts": 1789870932895, "run_id": "replay_open_account_1789870760", "level": "INFO", "message": "Replay complete", "data": {"steps_run": 15, "total_time_ms": 39581, "output": {"new_account_number": "SAV-482915-NEW"}}}

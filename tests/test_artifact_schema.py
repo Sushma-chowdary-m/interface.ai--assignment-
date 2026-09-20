@@ -11,8 +11,9 @@ from pathlib import Path
 
 from artifact import (
     Artifact, ArtifactStep, InputParameter, LocatorStrategy,
-    OutputExtraction, SuccessCheckpoint, TaskMeta,
+    OutputExtraction, SuccessCheckpoint, TaskMeta, build_artifact,
 )
+from agent import AgentAction, AgentResult, AgentStep, ActionKind
 
 
 def _sample_artifact() -> Artifact:
@@ -73,3 +74,38 @@ def test_schema_version_is_present_and_stable(tmp_path: Path):
     path = art.save(tmp_path)
     raw = json.loads(path.read_text())
     assert raw["schema_version"] == "1.0"
+
+
+def test_select_action_is_captured_as_a_templated_input():
+    """
+    Regression test for a bug where build_artifact() only created an
+    InputParameter for `type` and `navigate` actions — a `select` action
+    (choosing the account type dropdown) recorded no input at all, so the
+    artifact's declared `account_type` parameter had no step that actually
+    consumed it, and a different value passed at replay time was silently
+    a no-op. See REPORT.md §7.
+    """
+    action = AgentAction(
+        kind=ActionKind.SELECT, selector="select", value="savings",
+        description="Select savings account type", success=True,
+    )
+    step = AgentStep(
+        step_number=1, timestamp_ms=1, action=action,
+        page_url="http://127.0.0.1:5001/member/482915/open-account",
+        page_title="FirstBank Enterprise Portal",
+    )
+    result = AgentResult(
+        goal="open account", success=True, steps=[step],
+        extracted_data={}, total_time_ms=1, stop_reason="goal_met",
+    )
+    art = build_artifact(
+        result, task_id="open_account", display_name="Open Account",
+        description="test", category="write", risk_level="risky",
+    )
+    assert len(art.steps) == 1
+    inputs = art.steps[0].inputs
+    assert len(inputs) == 1
+    assert inputs[0].name == "account_type"
+    assert inputs[0].value == "savings"
+    assert inputs[0].is_templated is True
+    assert inputs[0].template_key == "{{account_type}}"

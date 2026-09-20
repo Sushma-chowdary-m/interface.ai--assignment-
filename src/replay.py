@@ -490,7 +490,7 @@ class ReplayEngine:
             headless=self.headless, args=["--no-sandbox"]
         )
         self._context = await self._browser.new_context(
-            viewport={"width": 1280, "height": 800}, locale="en-US"
+            viewport={"width": 900, "height": 700}, locale="en-US"
         )
         self.page = await self._context.new_page()
         self.logger.info("ReplayEngine browser launched", {"run_id": self.run_id})

@@ -54,7 +54,7 @@ from escalation import request_escalation, HandoffResult
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "")
 MODEL = "claude-sonnet-4-6"
 BASE_URL = "http://127.0.0.1:5001"
-MAX_STEPS = 20
+MAX_STEPS = 30
 STEP_TIMEOUT_S = 30          # seconds per step before we treat it as stuck
 SESSION_TIMEOUT_S = 300      # 5-minute hard cap per run
 EVIDENCE_DIR = Path(__file__).parent.parent / "evidence"
@@ -240,6 +240,10 @@ async def _screenshot(page: Page, name: str) -> Path:
     """Take a screenshot and save it to evidence/. Returns the path."""
     ts = int(time.time() * 1000)
     path = EVIDENCE_DIR / f"{ts}_{name}.png"
+    # In headed mode, an unfocused window can starve Chromium's paint loop
+    # and hang the screenshot's font-load wait indefinitely — bring it to
+    # front first so rendering isn't throttled.
+    await page.bring_to_front()
     await page.screenshot(path=str(path), full_page=False, scale="css", timeout=60000)
     return path
  
@@ -397,7 +401,7 @@ class BankingAgent:
             args=["--no-sandbox"],
         )
         self._context = await self._browser.new_context(
-            viewport={"width": 1024, "height": 640},
+            viewport={"width": 900, "height": 700},
             locale="en-US",
         )
         self.page = await self._context.new_page()

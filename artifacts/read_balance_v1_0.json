@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "artifact_id": "read_balance_1789356569",
-  "created_at_ms": 1789356569603,
+  "artifact_id": "read_balance_1789869141",
+  "created_at_ms": 1789869141833,
   "task": {
     "task_id": "read_balance",
     "display_name": "Read Member Savings Balance",
@@ -49,8 +49,8 @@
       "timeout_ms": 10000,
       "retry_count": 2,
       "on_failure": "stop",
-      "duration_ms": 747,
-      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789356532044_step_01_post.png",
+      "duration_ms": 782,
+      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789868906520_step_01_post.png",
       "page_url": "http://127.0.0.1:5001/login",
       "page_title": "FirstBank Enterprise Portal"
     },
@@ -89,15 +89,15 @@
       "timeout_ms": 10000,
       "retry_count": 2,
       "on_failure": "stop",
-      "duration_ms": 1057,
-      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789356536136_step_02_post.png",
+      "duration_ms": 1093,
+      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789868910368_step_02_post.png",
       "page_url": "http://127.0.0.1:5001/login",
       "page_title": "FirstBank Enterprise Portal"
     },
     {
       "step_number": 3,
       "action_kind": "click",
-      "description": "Click the password field to enter the password",
+      "description": "Click the password field to prepare for typing the password",
       "locator": {
         "primary": "input[name='password']",
         "fallbacks": [],
@@ -122,8 +122,8 @@
       "timeout_ms": 10000,
       "retry_count": 2,
       "on_failure": "stop",
-      "duration_ms": 664,
-      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789356539065_step_03_post.png",
+      "duration_ms": 701,
+      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789868913396_step_03_post.png",
       "page_url": "http://127.0.0.1:5001/login",
       "page_title": "FirstBank Enterprise Portal"
     },
@@ -162,18 +162,21 @@
       "timeout_ms": 10000,
       "retry_count": 2,
       "on_failure": "stop",
-      "duration_ms": 1229,
-      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789356543727_step_04_post.png",
+      "duration_ms": 1255,
+      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789868917755_step_04_post.png",
       "page_url": "http://127.0.0.1:5001/login",
       "page_title": "FirstBank Enterprise Portal"
     },
     {
       "step_number": 5,
       "action_kind": "click",
-      "description": "Click the Sign In to Portal button to submit login credentials",
+      "description": "Click the Sign In to Portal button to submit the login form",
       "locator": {
         "primary": "button[type='submit']",
-        "fallbacks": [],
+        "fallbacks": [
+          "role=button:Sign In to Portal",
+          "button[type='submit']"
+        ],
         "frame": null
       },
       "inputs": [],
@@ -195,15 +198,15 @@
       "timeout_ms": 10000,
       "retry_count": 2,
       "on_failure": "stop",
-      "duration_ms": 720,
-      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789356546758_step_05_post.png",
+      "duration_ms": 952,
+      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789868921271_step_05_post.png",
       "page_url": "http://127.0.0.1:5001/dashboard",
       "page_title": "FirstBank Enterprise Portal"
     },
     {
-      "step_number": 6,
+      "step_number": 7,
       "action_kind": "click",
-      "description": "Click the Search Member button to look up member 482915",
+      "description": "Click the Member Search link in the navigation bar",
       "locator": {
         "primary": "a[href='/search']",
         "fallbacks": [],
@@ -228,15 +231,48 @@
       "timeout_ms": 10000,
       "retry_count": 2,
       "on_failure": "stop",
-      "duration_ms": 678,
-      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789356551117_step_06_post.png",
+      "duration_ms": 892,
+      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789868939108_step_07_post.png",
       "page_url": "http://127.0.0.1:5001/search",
       "page_title": "FirstBank Enterprise Portal"
     },
     {
-      "step_number": 7,
+      "step_number": 8,
       "action_kind": "click",
-      "description": "Click the Member ID input field to enter the member ID",
+      "description": "Click the Member ID input field to focus it",
+      "locator": {
+        "primary": "input[placeholder='Enter member ID (e.g. 482915)']",
+        "fallbacks": [],
+        "frame": null
+      },
+      "inputs": [],
+      "outputs": [],
+      "checkpoints": [
+        {
+          "kind": "url_contains",
+          "value": "/search",
+          "selector": null
+        },
+        {
+          "kind": "title_contains",
+          "value": "FirstBank Enterprise Portal",
+          "selector": null
+        }
+      ],
+      "risk_level": "caution",
+      "is_reversible": true,
+      "timeout_ms": 10000,
+      "retry_count": 2,
+      "on_failure": "stop",
+      "duration_ms": 703,
+      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789868943180_step_08_post.png",
+      "page_url": "http://127.0.0.1:5001/search",
+      "page_title": "FirstBank Enterprise Portal"
+    },
+    {
+      "step_number": 10,
+      "action_kind": "click",
+      "description": "Click the Member ID input field to focus it for typing",
       "locator": {
         "primary": "placeholder=Enter member ID (e.g. 482915)",
         "fallbacks": [
@@ -264,13 +300,13 @@
       "timeout_ms": 10000,
       "retry_count": 2,
       "on_failure": "stop",
-      "duration_ms": 681,
-      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789356555065_step_07_post.png",
+      "duration_ms": 668,
+      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789868981218_step_10_post.png",
       "page_url": "http://127.0.0.1:5001/search",
       "page_title": "FirstBank Enterprise Portal"
     },
     {
-      "step_number": 8,
+      "step_number": 11,
       "action_kind": "type",
       "description": "Type member ID 482915 into the search field",
       "locator": {
@@ -307,17 +343,53 @@
       "timeout_ms": 10000,
       "retry_count": 2,
       "on_failure": "stop",
-      "duration_ms": 875,
-      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789356558660_step_08_post.png",
+      "duration_ms": 890,
+      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789868984763_step_11_post.png",
       "page_url": "http://127.0.0.1:5001/search",
       "page_title": "FirstBank Enterprise Portal"
     },
     {
-      "step_number": 9,
+      "step_number": 12,
       "action_kind": "click",
-      "description": "Click the SEARCH button to look up member 482915",
+      "description": "Click the SEARCH button to search for member 482915",
       "locator": {
-        "primary": "button[type='submit']",
+        "primary": "button.search-btn",
+        "fallbacks": [
+          "role=button:SEARCH",
+          "button[type='submit']"
+        ],
+        "frame": null
+      },
+      "inputs": [],
+      "outputs": [],
+      "checkpoints": [
+        {
+          "kind": "url_contains",
+          "value": "/search",
+          "selector": null
+        },
+        {
+          "kind": "title_contains",
+          "value": "FirstBank Enterprise Portal",
+          "selector": null
+        }
+      ],
+      "risk_level": "caution",
+      "is_reversible": true,
+      "timeout_ms": 10000,
+      "retry_count": 2,
+      "on_failure": "stop",
+      "duration_ms": 762,
+      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789868987988_step_12_post.png",
+      "page_url": "http://127.0.0.1:5001/search",
+      "page_title": "FirstBank Enterprise Portal"
+    },
+    {
+      "step_number": 13,
+      "action_kind": "click",
+      "description": "Click the Member ID input field to focus it",
+      "locator": {
+        "primary": "input[placeholder='Enter member ID (e.g. 482915)']",
         "fallbacks": [],
         "frame": null
       },
@@ -340,18 +412,168 @@
       "timeout_ms": 10000,
       "retry_count": 2,
       "on_failure": "stop",
-      "duration_ms": 662,
-      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789356561908_step_09_post.png",
+      "duration_ms": 654,
+      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789868992718_step_13_post.png",
       "page_url": "http://127.0.0.1:5001/search",
       "page_title": "FirstBank Enterprise Portal"
     },
     {
-      "step_number": 10,
+      "step_number": 14,
+      "action_kind": "type",
+      "description": "Type member ID 482915 into the search field",
+      "locator": {
+        "primary": "input[placeholder='Enter member ID (e.g. 482915)']",
+        "fallbacks": [],
+        "frame": null
+      },
+      "inputs": [
+        {
+          "name": "member_id",
+          "value": "482915",
+          "is_templated": true,
+          "template_key": "{{member_id}}"
+        }
+      ],
+      "outputs": [],
+      "checkpoints": [
+        {
+          "kind": "url_contains",
+          "value": "/search",
+          "selector": null
+        },
+        {
+          "kind": "title_contains",
+          "value": "FirstBank Enterprise Portal",
+          "selector": null
+        }
+      ],
+      "risk_level": "caution",
+      "is_reversible": true,
+      "timeout_ms": 10000,
+      "retry_count": 2,
+      "on_failure": "stop",
+      "duration_ms": 865,
+      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789868998650_step_14_post.png",
+      "page_url": "http://127.0.0.1:5001/search",
+      "page_title": "FirstBank Enterprise Portal"
+    },
+    {
+      "step_number": 15,
       "action_kind": "click",
-      "description": "Click VIEW DETAILS to open member 482915's account details",
+      "description": "Click the SEARCH button to search for member 482915",
+      "locator": {
+        "primary": "button.search-btn",
+        "fallbacks": [
+          "role=button:SEARCH",
+          "button[type='submit']"
+        ],
+        "frame": null
+      },
+      "inputs": [],
+      "outputs": [],
+      "checkpoints": [
+        {
+          "kind": "url_contains",
+          "value": "/search",
+          "selector": null
+        },
+        {
+          "kind": "title_contains",
+          "value": "FirstBank Enterprise Portal",
+          "selector": null
+        }
+      ],
+      "risk_level": "caution",
+      "is_reversible": true,
+      "timeout_ms": 10000,
+      "retry_count": 2,
+      "on_failure": "stop",
+      "duration_ms": 776,
+      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789869003276_step_15_post.png",
+      "page_url": "http://127.0.0.1:5001/search",
+      "page_title": "FirstBank Enterprise Portal"
+    },
+    {
+      "step_number": 19,
+      "action_kind": "navigate",
+      "description": "Navigate to the member details page directly by clicking VIEW DETAILS button using a different approach",
+      "locator": null,
+      "inputs": [
+        {
+          "name": "url",
+          "value": "javascript:void(0)",
+          "is_templated": false,
+          "template_key": null
+        }
+      ],
+      "outputs": [],
+      "checkpoints": [
+        {
+          "kind": "url_contains",
+          "value": "/search",
+          "selector": null
+        },
+        {
+          "kind": "title_contains",
+          "value": "FirstBank Enterprise Portal",
+          "selector": null
+        }
+      ],
+      "risk_level": "safe",
+      "is_reversible": true,
+      "timeout_ms": 10000,
+      "retry_count": 2,
+      "on_failure": "retry",
+      "duration_ms": 618,
+      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789869102455_step_19_post.png",
+      "page_url": "http://127.0.0.1:5001/search",
+      "page_title": "FirstBank Enterprise Portal"
+    },
+    {
+      "step_number": 21,
+      "action_kind": "navigate",
+      "description": "Navigate directly to the member details page for member 482915",
+      "locator": null,
+      "inputs": [
+        {
+          "name": "url",
+          "value": "javascript:void(0)",
+          "is_templated": false,
+          "template_key": null
+        }
+      ],
+      "outputs": [],
+      "checkpoints": [
+        {
+          "kind": "url_contains",
+          "value": "/search",
+          "selector": null
+        },
+        {
+          "kind": "title_contains",
+          "value": "FirstBank Enterprise Portal",
+          "selector": null
+        }
+      ],
+      "risk_level": "safe",
+      "is_reversible": true,
+      "timeout_ms": 10000,
+      "retry_count": 2,
+      "on_failure": "retry",
+      "duration_ms": 604,
+      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789869118725_step_21_post.png",
+      "page_url": "http://127.0.0.1:5001/search",
+      "page_title": "FirstBank Enterprise Portal"
+    },
+    {
+      "step_number": 23,
+      "action_kind": "click",
+      "description": "Click the VIEW DETAILS button using text selector",
       "locator": {
         "primary": "a[href*='/member/']",
-        "fallbacks": [],
+        "fallbacks": [
+          "role=button:VIEW DETAILS"
+        ],
         "frame": null
       },
       "inputs": [],
@@ -373,15 +595,15 @@
       "timeout_ms": 10000,
       "retry_count": 2,
       "on_failure": "stop",
-      "duration_ms": 658,
-      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789356565999_step_10_post.png",
+      "duration_ms": 950,
+      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789869137459_step_23_post.png",
       "page_url": "http://127.0.0.1:5001/member/482915",
       "page_title": "FirstBank Enterprise Portal"
     },
     {
-      "step_number": 11,
+      "step_number": 24,
       "action_kind": "done",
-      "description": "Member 482915 has been found and the savings balance is visible on screen.",
+      "description": "The savings balance for member 482915 is visible on the screen.",
       "locator": null,
       "inputs": [],
       "outputs": [
@@ -428,7 +650,7 @@
       "retry_count": 2,
       "on_failure": "stop",
       "duration_ms": 0,
-      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789356566015_step_11.png",
+      "screenshot_path": "/Users/sushmamallampati/interface-ai-assignment/evidence/1789869137533_step_24.png",
       "page_url": "http://127.0.0.1:5001/member/482915",
       "page_title": "FirstBank Enterprise Portal"
     }
@@ -438,5 +660,5 @@
     "full_name": "John Smith",
     "savings_balance": "$4,250.00"
   },
-  "notes": "Discovery run completed in 43938ms with 11 steps. Stop reason: goal_met."
+  "notes": "Discovery run completed in 238937ms with 24 steps. Stop reason: goal_met."
 }

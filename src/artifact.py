@@ -204,6 +204,29 @@ def build_artifact(
                 is_templated = _is_templatable(a.selector or ""),
                 template_key = _template_key(a.selector or ""),
             ))
+        elif a.kind.value == "select" and a.value:
+            # Previously unhandled: only "type" and "navigate" actions got an
+            # InputParameter, so a `select` step (e.g. choosing the account
+            # type dropdown) recorded no input at all. Replay's select branch
+            # falls back to a hardcoded "savings" default whenever
+            # step.inputs is empty, which happened to match the demo data
+            # and hid the bug — but a caller passing a different account_type
+            # would be silently ignored on replay. Found by tracing why the
+            # declared `account_type` task parameter had no step that
+            # consumed it.
+            # The recorded selector for a select action is typically the
+            # generic "select" (Claude doesn't name the underlying <select>
+            # element), which doesn't contain "account" and would fall
+            # through _infer_input_name to the useless generic
+            # "input_value" name. The only select control in this flow is
+            # the account-type dropdown, so name it directly rather than
+            # inferring from a selector that carries no signal here.
+            inputs.append(InputParameter(
+                name         = "account_type",
+                value        = a.value,
+                is_templated = True,
+                template_key = "{{account_type}}",
+            ))
         elif a.kind.value == "navigate" and a.value:
             # A navigate action's actual target (a URL, or a `javascript:`
             # scroll snippet the agent used for scrolling) was previously

@@ -281,9 +281,9 @@ tighten them without a deploy):
   (`api.py`) — deliberately conservative: an irreversible write never runs unattended without an
   explicit opt-in from whoever is invoking it.
 - **Redaction** — `GuardrailsEngine.redact()` scrubs SSNs, card numbers, routing numbers, emails,
-  and the known password pattern from every log line (`logger.py` applies it unconditionally,
-  not opt-in per call site) and `sanitize_artifact()` walks the artifact JSON recursively before
-  it's ever written to disk.
+  and labeled password text from every log line, and `sanitize_artifact()` walks the artifact
+  JSON recursively before it's ever written to disk. Neither is a single unconditional net,
+  though — see the log-leak bug below, which is exactly a case where that assumption was wrong.
 
 **A real risk-classification bug, also found by running the artifacts, not reading them.**
 `RISKY_SELECTOR_PATTERNS` originally included a bare `r"submit"`. Nearly every HTML form
@@ -316,6 +316,22 @@ implementation, then fixed `sanitize_artifact` to also recognize and redact that
 pair shape. This is now covered by a regression test in `tests/test_artifact_schema.py`
 (`test_password_input_is_redacted_on_save`) that asserts the *saved JSON file* never contains
 the plaintext value.
+
+**A real credential-leak bug — the password was reaching `agent.log` in plaintext.**
+`sanitize_artifact()`'s name/value-pair redaction (described above) only fires when a value sits
+next to a sibling `"name"` key that's a blocked field — the shape `InputParameter` and
+`OutputExtraction` actually serialize as. `logger.py`'s per-step log entry has no such sibling:
+it writes a flat `{"action_selector": ..., "action_value": ...}` pair, so a `type` action into
+the password field wrote the real value straight into `agent.log`, no redaction applied at all.
+I found this by grepping the actual discovery logs in `evidence/` for the literal password
+string and getting real hits across six separate runs — not by reasoning about the code, since
+the code's own inline comment at that line claimed the opposite ("passwords already blocked by
+guardrails"). Fixed by redacting in `logger.py` directly: any `type` action whose selector names
+a password field gets its value blanked before the entry is written, independent of what the
+value actually is (so this doesn't quietly stop working the next time the demo password
+rotates, the same reasoning behind the regex-based redaction above). Existing logs that had
+already captured the plaintext value were scrubbed by hand; the re-run in
+`evidence/open_account_1789870760/` confirms the fix going forward.
 
 **Limits, stated plainly.** The allowlist and risk patterns are regex-based and could be evaded
 by a sufficiently adversarial page (not a realistic threat model for an internal back-office
@@ -355,17 +371,19 @@ What's built thin-but-real, and why:
 - **`api.py`'s run registry is in-memory** — fine for a demo, not for a restart-surviving
   production deployment. Would move to a real datastore before this became a second dependency
   any other service relied on.
-- **A declared parameter isn't always backed by a step that consumes it.** The `open_account`
-  artifact's `TaskMeta.parameters` lists `account_type` as a caller-supplied input, but the
-  discovery run never actually interacted with that form field — "Savings" was already the
-  default selected option, so the agent left it alone and no `select` step was ever recorded.
-  Passing a different `account_type` at replay time is therefore silently a no-op: nothing raises
-  an error, but nothing changes either. Found while re-verifying parameterization, not fixed —
-  fixing it properly means re-recording discovery with a goal that forces the agent to actually
-  choose a non-default account type, not a code change. **Next:** validate at artifact-build time
-  that every declared parameter has at least one consuming step, and reject (or flag) the
-  artifact if not — turning this class of gap into a build-time error instead of a silent runtime
-  no-op.
+- **A declared parameter wasn't backed by a step that consumed it — found and fixed.** The
+  `open_account` artifact's `TaskMeta.parameters` lists `account_type` as a caller-supplied
+  input, but `build_artifact` only ever created an `InputParameter` for `type` and `navigate`
+  actions — a `select` step (choosing the account type from the dropdown) recorded nothing at
+  all. Passing a different `account_type` at replay time was therefore silently a no-op. Fixed by
+  giving `select` actions their own input-capture branch in `artifact.py`, named directly as
+  `account_type` rather than inferred from the selector (the recorded selector for a `<select>`
+  is generic — `"select"` — and carries no signal to infer a name from). Re-ran discovery to
+  confirm: `evidence/open_account_1789870760/` produced an artifact whose step 16 now carries
+  `{"name": "account_type", "value": "savings", "is_templated": true}`. **Still worth building
+  next:** a build-time check that every declared parameter has at least one consuming step, so
+  this class of gap becomes a build-time error instead of something that has to be found by
+  re-verifying parameterization by hand.
 
 **A reliability fix worth naming even though it's not a "bug" in the error-taxonomy sense:**
 Claude's JSON action response occasionally includes trailing content after a complete, valid
